@@ -1,0 +1,85 @@
+﻿{
+    "Url": "https://www.epdata.es/consumo-tabaco/042e29e1-a635-4389-82ce-1e05abf7adab/melilla/305",
+    "Respuesta": {
+        "Id": "042e29e1-a635-4389-82ce-1e05abf7adab",
+        "Url": "https://www.epdata.es/consumo-tabaco/042e29e1-a635-4389-82ce-1e05abf7adab/melilla/305",
+        "Titulo": "Población que fuma a diario en Melilla﻿",
+        "Subtitulo": "",
+        "Datos": {
+            "Metricas": [
+                {
+                    "Id": 0,
+                    "Nombre": "Consumo de tabaco a nivel anual - Porcentaje de la población que consumen tabaco a diario para total como sexo, total como grupo de edad y Melilla como comunidad autónoma",
+                    "SonDatosNumericos": true,
+                    "Fuente": "Ministerio de Sanidad, Servicios Sociales e Igualdad",
+                    "Clasificacion": null,
+                    "Unidad": "Porcentaje de la población que consumen tabaco a diario",
+                    "Escala": "Unidades",
+                    "EscalaFactorPotencia10": 0,
+                    "Datos": [
+                        {
+                            "Agno": 2011,
+                            "Periodo": "Año",
+                            "Parametro": "2011",
+                            "Valor": 18.99,
+                            "Estado": "Definitivo",
+                            "Notas": ""
+                        },
+                        {
+                            "Agno": 2017,
+                            "Periodo": "Año",
+                            "Parametro": "2017",
+                            "Valor": 19.49,
+                            "Estado": "Definitivo",
+                            "Notas": ""
+                        }
+                    ]
+                },
+                {
+                    "Id": 1,
+                    "Nombre": "Consumo de tabaco a nivel anual - Porcentaje de la población que consumen tabaco a diario para total como sexo, total como grupo de edad y España como país",
+                    "SonDatosNumericos": true,
+                    "Fuente": "Ministerio de Sanidad, Servicios Sociales e Igualdad",
+                    "Clasificacion": null,
+                    "Unidad": "Porcentaje de la población que consumen tabaco a diario",
+                    "Escala": "Unidades",
+                    "EscalaFactorPotencia10": 0,
+                    "Datos": [
+                        {
+                            "Agno": 2006,
+                            "Periodo": "Año",
+                            "Parametro": "2006",
+                            "Valor": 26.44,
+                            "Estado": "Definitivo",
+                            "Notas": ""
+                        },
+                        {
+                            "Agno": 2011,
+                            "Periodo": "Año",
+                            "Parametro": "2011",
+                            "Valor": 23.95,
+                            "Estado": "Definitivo",
+                            "Notas": ""
+                        },
+                        {
+                            "Agno": 2014,
+                            "Periodo": "Año",
+                            "Parametro": "2014",
+                            "Valor": 22.98,
+                            "Estado": "Definitivo",
+                            "Notas": ""
+                        },
+                        {
+                            "Agno": 2017,
+                            "Periodo": "Año",
+                            "Parametro": "2017",
+                            "Valor": 22.08,
+                            "Estado": "Definitivo",
+                            "Notas": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
