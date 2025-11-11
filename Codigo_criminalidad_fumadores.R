@@ -27,6 +27,7 @@ procesar_csv <- function(f) {
   return(df)
 }
 
+
 # Aplicar a todos los archivos y unir
 datos_criminalidad_total <- bind_rows(lapply(archivos, procesar_csv))
 
