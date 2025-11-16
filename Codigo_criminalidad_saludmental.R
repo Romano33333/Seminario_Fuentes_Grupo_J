@@ -47,7 +47,7 @@ library(dplyr)
 library(readr)
 
 
-# 1) Arreglar nombres de comunidad en SALUD MENTAL ------------------------
+# Arreglar nombres de comunidades en salud mental
 
 salud_mental2 <- salud_mental %>%
   rename(Comunidad = `Comunidades y Ciudades Autónomas`) %>%
@@ -82,22 +82,22 @@ salud_resumen <- salud_mental2 %>%
     SaludMental = Total
   ) %>%
   mutate(
-    SaludMental = parse_number(SaludMental)  # pasar a número
+    SaludMental = parse_number(SaludMental)  # convertimos los datos de salud mental a números para poder trabajar con ellos
   )
 
 
-# 2) Resumen de CRIMINALIDAD por comunidad --------------------------------
+# Resumen de crimen por comunidad
 
 criminalidad_resumen <- datos_criminalidad_total %>%
   mutate(
-    comunidad = str_replace(comunidad, "^En\\s+", "")  # quita "En " al inicio
+    comunidad = str_replace(comunidad, "^En\\s+", "")
   ) %>%
   group_by(comunidad) %>%
   summarise(
     Criminalidad = mean(`Denuncias (Dato acumulados)`, na.rm = TRUE)
   )
 
-# 3) Unimos criminalidad + salud mental por comunidad
+# Unión de criminalidad + salud mental por comunidad
 datos_resumen <- left_join(
   criminalidad_resumen,
   salud_resumen,
@@ -106,7 +106,7 @@ datos_resumen <- left_join(
 
 View(datos_resumen)
 
-#ver la comunuidad con mayor y menor tasa de salud mental y ver si hay relación con la criminalidad para ambos sexos
+# Ver la comunuidad con mayor y menor tasa de salud mental y ver si hay relación con la criminalidad para ambos sexos
 datos_ambos <- datos_resumen %>% 
   filter(Sexo == "AMBOS SEXOS")
 comparacion <- datos_ambos %>%
