@@ -6,21 +6,18 @@ output: html_document
 
 ### Importación de datos de criminalidad por comunidad autonomica
 ```{r, message=FALSE}
-install.packages("tidyverse")
-install.packages("jsonlite")
 library(tidyverse)
 library(stringr)
 library(jsonlite)
 library(tidyr)
 library(readxl)
-```{r}
 #iMPORTACIÓN
 ruta_criminalidad <- "INPUT/DATA/CRIMINALIDAD"
 archivos <- list.files(path = ruta_criminalidad, pattern = "*.csv", full.names = TRUE)
 
 
 # Función para procesar cada CSV y añadir la columna comunidad
-```{r}
+
 procesar_csv <- function(f) {
   df <- read_csv2(f)  # read_csv2 usa ";" como separador, típico en España
   comunidad <- f %>%
@@ -36,7 +33,7 @@ procesar_csv <- function(f) {
   df$comunidad <- comunidad
   return(df)
 }
-```{}
+
 
 # Aplicar a todos los archivos y unir
 datos_criminalidad_total <- bind_rows(lapply(archivos, procesar_csv))
@@ -81,6 +78,6 @@ carpeta_fumadores <- "INPUT/DATA/FUMADORES"
 file.copy(from = archivo_nuevo, to = carpeta_fumadores, overwrite = TRUE)
 
 cat("Archivo CSV nuevo copiado correctamente a la carpeta FUMADORES\n")
-```{}
 ## --- Comprobación del contenido final ---
 
+```
