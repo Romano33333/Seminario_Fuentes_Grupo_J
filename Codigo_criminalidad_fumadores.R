@@ -6,7 +6,7 @@ library(tidyverse)
 library(stringr)
 library(jsonlite)
 library(tidyr)
-
+library(readxl)
 ruta_criminalidad <- "INPUT/DATA/CRIMINALIDAD"
 archivos <- list.files(path = ruta_criminalidad, pattern = "*.csv", full.names = TRUE)
 
@@ -73,4 +73,4 @@ file.copy(from = archivo_nuevo, to = carpeta_fumadores, overwrite = TRUE)
 cat("Archivo CSV nuevo copiado correctamente a la carpeta FUMADORES\n")
 ## --- Comprobación del contenido final ---
 
-list.files(carpeta_fumadores)
+s
