@@ -1,3 +1,8 @@
+---
+title: "Codigo_criminalidad_saludmental"
+output: html_document
+---
+```{r}
 library(readr)
 library(dplyr)
 
@@ -177,7 +182,7 @@ ggplot(data = datos_hombres,
     subtitle = "Hombres - Comunidades Autónomas"
   )
 
-
+```
 
 
 
