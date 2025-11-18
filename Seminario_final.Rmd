@@ -1,0 +1,174 @@
+---
+title: "Análisis de Criminalidad y Salud Mental en Comunidades Autónomas"
+author: "Tu Nombre"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    theme: spacelab
+---
+# Introducción
+
+En este informe se analiza la relación entre la criminalidad y los problemas de salud mental en las comunidades autónomas de España. 
+El objetivo es explorar si existe alguna correlación entre la criminalidad media y la incidencia de problemas de salud mental, diferenciando por sexo. 
+Se utilizarán datos oficiales de salud mental y criminalidad.
+
+# 1. Carga de librerías y configuración inicial
+
+```{r libraries, message=FALSE, warning=FALSE}
+# Librerías necesarias
+library(tidyverse)
+library(readr)
+library(jsonlite)
+library(stringr)
+library(ggrepel)
+```
+# Carpeta con los archivos
+```{r salud_mental, message=FALSE, warning=FALSE}
+carpeta <- "INPUT/DATA/Salud_Mental"
+archivos <- list.files(carpeta, pattern = "_UTF8\\.csv$", full.names = TRUE)
+```
+# Leer y combinar todos los CSV
+```{r combina_salud, message=FALSE, warning=FALSE}
+salud_mental <- read_delim(
+archivos, delim = ";", id = "archivo",
+trim_ws = TRUE, show_col_types = FALSE
+)
+```
+# Homogeneizar nombres de comunidades
+```{r homogeneiza_nombres, message=FALSE, warning=FALSE}
+salud_mental2 <- salud_mental %>%
+rename(Comunidad = `Comunidades y Ciudades Autónomas`) %>%
+mutate(
+Comunidad = case_when(
+Comunidad == "Andalucía"                   ~ "Andalucia",
+Comunidad == "Aragón"                      ~ "Aragon",
+Comunidad == "Asturias, Principado de"     ~ "Principado De Asturias",
+Comunidad == "Balears, Illes"              ~ "Islas Baleares",
+Comunidad == "Castilla-La Mancha"          ~ "Castilla La Mancha",
+Comunidad == "Castilla y León"             ~ "Castilla Y Leon",
+Comunidad == "Comunitat Valenciana"        ~ "Comunidad Valenciana",
+Comunidad == "Madrid, Comunidad de"        ~ "Comunidad De Madrid",
+Comunidad == "Murcia, Región de"           ~ "Region De Murcia",
+Comunidad == "Navarra, Comunidad Foral de" ~ "Comunidad Foral De Navarra",
+Comunidad == "País Vasco"                  ~ "Pais Vasco",
+Comunidad == "Rioja, La"                   ~ "La Rioja",
+TRUE ~ Comunidad
+)
+)
+```
+# Filtrar y seleccionar columnas importantes
+```{r cols_importantes, message=FALSE, warning=FALSE}
+salud_resumen <- salud_mental2 %>%
+filter(
+`Total Nacional` == "Total",
+`Número medio` == "Media",
+Sexo %in% c("AMBOS SEXOS","MUJERES","HOMBRES")
+) %>%
+select(
+comunidad = Comunidad,
+Sexo,
+SaludMental = Total
+) %>%
+mutate(SaludMental = parse_number(SaludMental))  # Convertimos a num
+```
+# Carpeta con criminalidad
+```{r criminaldad, message=FALSE, warning=FALSE}
+ruta_criminalidad <- "INPUT/DATA/CRIMINALIDAD"
+archivos <- list.files(path = ruta_criminalidad, pattern = "*.csv", full.names = TRUE)
+```
+# Función para procesar cada CSV y añadir la columna comunidad
+```{r añdir_comunidad, message=FALSE, warning=FALSE}
+procesar_csv <- function(f) {
+df <- read_csv2(f)
+comunidad <- f %>%
+basename() %>%
+str_remove("\\.csv$") %>%
+str_to_lower() %>%
+str_extract("(?<=en_).*") %>%
+str_replace_all("[_\\-]+", " ") %>%
+str_squish() %>%
+str_to_title()
+df$comunidad <- comunidad
+df
+}
+```
+# Aplicar a todos los archivos y unir
+```{r unir, message=FALSE, warning=FALSE}
+datos_criminalidad_total <- bind_rows(lapply(archivos, procesar_csv))
+```
+# Resumen de criminalidad por comunidad
+```{r resumen_criminalidad, message=FALSE, warning=FALSE}
+criminalidad_resumen <- datos_criminalidad_total %>%
+mutate(comunidad = str_replace(comunidad, "^En\\s+", "")) %>%
+group_by(comunidad) %>%
+summarise(Criminalidad = mean(`Denuncias (Dato acumulados)`, na.rm = TRUE))
+```
+# Unión
+```{r union, message=FALSE, warning=FALSE}
+datos_resumen <- left_join(criminalidad_resumen, salud_resumen, by = "comunidad")
+```
+# Revisamos los primeros registros
+```{r revision, message=FALSE, warning=FALSE}
+head(datos_resumen)
+```
+# Ambos sexos
+```{r ambos_sexos, message=FALSE, warning=FALSE}
+datos_ambos <- datos_resumen %>% filter(Sexo == "AMBOS SEXOS")
+comparacion_ambos <- datos_ambos %>%
+filter(SaludMental == max(SaludMental, na.rm = TRUE) |
+SaludMental == min(SaludMental, na.rm = TRUE))
+```
+# Mujeres
+```{r mujeres, message=FALSE, warning=FALSE}
+datos_mujeres <- datos_resumen %>% filter(Sexo == "MUJERES")
+comparacion_mujeres <- datos_mujeres %>%
+filter(SaludMental == max(SaludMental, na.rm = TRUE) |
+SaludMental == min(SaludMental, na.rm = TRUE))
+```
+# Hombres
+```{r hombres, message=FALSE, warning=FALSE}
+datos_hombres <- datos_resumen %>% filter(Sexo == "HOMBRES")
+comparacion_hombres <- datos_hombres %>%
+filter(SaludMental == max(SaludMental, na.rm = TRUE) |
+SaludMental == min(SaludMental, na.rm = TRUE))
+```
+# Ambos sexos
+```{r gg_ambos_sexos, message=FALSE, warning=FALSE}
+ggplot(datos_ambos, aes(x = Criminalidad, y = SaludMental)) +
+geom_point(colour = "red") +
+geom_smooth(method = "lm", se = TRUE, colour = "gold") +
+geom_text_repel(aes(label = comunidad), size = 3) +
+labs(
+x = "Criminalidad media (denuncias)",
+y = "Problemas de salud mental (media)",
+title = "Relación entre Criminalidad y Salud Mental",
+subtitle = "Ambos sexos — Comunidades Autónomas"
+)
+```
+# Mujeres
+```{r gg_mujeres, message=FALSE, warning=FALSE}
+ggplot(datos_mujeres, aes(x = Criminalidad, y = SaludMental)) +
+geom_point(colour = "deeppink") +
+geom_smooth(method = "lm", se = TRUE, colour = "red") +
+labs(
+x = "Criminalidad media (denuncias)",
+y = "Problemas de salud mental (media)",
+title = "Relación entre Criminalidad y Salud Mental",
+subtitle = "Mujeres — Comunidades Autónomas"
+)
+```
+# Hombres
+```{r gg_hombres, message=FALSE, warning=FALSE}
+ggplot(datos_hombres, aes(x = Criminalidad, y = SaludMental)) +
+geom_point(colour = "blue") +
+geom_smooth(method = "lm", se = TRUE, colour = "red") +
+labs(
+x = "Criminalidad media (denuncias)",
+y = "Problemas de salud mental (media)",
+title = "Relación entre Criminalidad y Salud Mental",
+subtitle = "Hombres — Comunidades Autónomas"
+)
+```
+
