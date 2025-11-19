@@ -184,13 +184,227 @@ ggplot(data = datos_hombres,
 
 ```
 
+```{r, message=FALSE, warning=FALSE}
+install.packages("kableExtra")
+library(jsonlite)
+library(tidyverse)
+library(dplyr)
+library(knitr)
+library(kableExtra)
+ruta_json <- "Fumadores/fumadores_diarios.json"
+datos_fumadores <- fromJSON(ruta_json)
 
+head(datos_fumadores)
+datos_fumadores
+str(datos_fumadores)
 
+tabla_data <- datos_fumadores %>%
+  select(Nombre, Data) %>%
+  unnest(Data)
 
+tabla_data %>%
+  kable("html", caption = "Series temporales de fumadores por comunidad") %>%
+  kable_styling(full_width = FALSE, bootstrap_options = c("striped", "hover"))
 
+tabla_fumadores <- datos_fumadores %>%
+  select(Nombre, Data) %>%
+  unnest(Data) %>%
+  mutate(
+    Comunidad = str_extract(Nombre, "(?<=\\. ).*?(?=\\.)")
+  ) %>%
+  select(Comunidad, Anyo, Valor)
+tabla_fumadores%>%
+  kable("html",caption="Datos relevantes de fumadores diarios por comunidad autonoma")%>%
+  kable_styling(full_width = FALSE,bootstrap_options = c("Striped","hover"))
+```
+```{r,message=FALSE,warning=FALSE}
+tabla_fumadores <- tabla_fumadores %>%
+  rename(Comunidad = `Comunidad`) %>%
+  mutate(
+    Comunidad = case_when(
+      Comunidad == "Andalucía"                   ~ "Andalucia",
+      Comunidad == "Aragón"                      ~ "Aragon",
+      Comunidad == "Asturias, Principado de"     ~ "Principado De Asturias",
+      Comunidad == "Balears, Illes"              ~ "Islas Baleares",
+      Comunidad == "Castilla-La Mancha"          ~ "Castilla La Mancha",
+      Comunidad == "Castilla y León"             ~ "Castilla Y Leon",
+      Comunidad == "Comunitat Valenciana"        ~ "Comunidad Valenciana",
+      Comunidad == "Madrid, Comunidad de"        ~ "Comunidad De Madrid",
+      Comunidad == "Murcia, Región de"           ~ "Region De Murcia",
+      Comunidad == "Navarra, Comunidad Foral de" ~ "Comunidad Foral De Navarra",
+      Comunidad == "País Vasco"                  ~ "Pais Vasco",
+      Comunidad == "Rioja, La"                   ~ "La Rioja",
+      TRUE ~ Comunidad
+    )
+  )
+tabla_fumadores
 
+```
 
+```{r,message=FALSE,warning=FALSE}
+library(dplyr)
+library(ggplot2)
 
+# Filtrar solo los parámetros que nos interesan
+parametros <- c("Secuestro",
+                "Robos con violencia e intimidación",
+                "Hurtos",
+                "Tráfico de drogas",
+                "Sustracciones de vehículos",
+                "Homicidios dolosos y asesinatos consumados",
+                "Agresión sexual con penetración",
+                "Robos con fuerza en domicilios, establecimientos y otras instalaciones"
+)
 
+datos_criminalidad_parametros <- datos_criminalidad_total %>%
+  mutate(comunidad = str_replace(comunidad, "^En\\s+", "")) %>%
+  filter(Parámetro %in% parametros) %>%
+  group_by(comunidad, Parámetro, Año) %>%
+  summarise(Denuncias_anuales = sum(`Denuncias (Dato acumulados)`, na.rm = TRUE)) %>%
+  ungroup() %>%
+  mutate(Año = as.numeric(Año))
 
+graficos_facetas <- lapply(parametros, function(p) {
+  datos_param <- datos_criminalidad_parametros %>%
+    filter(Parámetro == p)
+  
+  ggplot(datos_param, aes(x = Año, y = Denuncias_anuales)) +
+    geom_line(color = "steelblue", size = 1) +
+    geom_point(color = "darkred", size = 2) +
+    facet_wrap(~comunidad, scales = "free_y") +
+    labs(
+      title = paste("Evolución de", p, "por Comunidad Autónoma"),
+      x = "Año",
+      y = "Denuncias acumuladas"
+    ) +
+    theme_minimal(base_size = 12) +
+    theme(
+      plot.title = element_text(face = "bold", size = 16),
+      axis.title = element_text(face = "bold")
+    )
+})
+
+# Mostrar gráficos
+for (g in graficos_facetas) {
+  print(g)
+}
+```
+
+```{r,message=FALSE,warning=FALSE}
+str(datos_criminalidad_total)
+library(dplyr)
+library(ggplot2)
+library(ggrepel)
+#  Limpiar nombres de comunidad en criminalidad
+criminalidad_media <- datos_criminalidad_total %>%
+  mutate(
+    comunidad = str_replace(comunidad, "^En\\s+", "")  # quitamos "En " al principio
+  ) %>%
+  group_by(comunidad) %>%
+  summarise(
+    Criminalidad_media = mean(`Denuncias (Dato acumulados)`, na.rm = TRUE)
+  )
+#  Filtrar la tabla de fumadores para que coincida con las comunidades
+fumadores_filtrado <- tabla_fumadores %>%
+  filter(Comunidad != "Total Nacional") %>%
+  group_by(Comunidad) %>%
+  summarise(
+    Fumadores_media = mean(Valor, na.rm = TRUE)
+  )
+# Unir ambas tablas
+datos_union <- left_join(criminalidad_media, fumadores_filtrado, 
+                         by = c("comunidad" = "Comunidad"))
+# 4️⃣ Gráfico: Criminalidad vs Fumadores diarios
+ggplot(datos_union, aes(x = Criminalidad_media, y = Fumadores_media)) +
+  geom_point(color = "firebrick", size = 3) +
+  geom_smooth(method = "lm", color = "gold", se = TRUE) +
+  geom_text_repel(aes(label = comunidad), size = 3) +
+  labs(
+    x = "Criminalidad media (denuncias)",
+    y = "Fumadores diarios (%)",
+    title = "Relación entre Criminalidad y Fumadores diarios",
+    subtitle = "Comparativa por Comunidades Autónomas"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold", size = 16),
+    plot.subtitle = element_text(size = 12),
+    axis.title = element_text(face = "bold")
+  )
+```
+
+```{r,message=FALSE,warning=FALSE}
+library(dplyr)
+library(ggplot2)
+library(ggrepel)
+library(tidyr)
+
+#  Limpiar nombres de comunidad
+datos_criminalidad_total <- datos_criminalidad_total %>%
+  mutate(comunidad = str_replace(comunidad, "^En\\s+", ""))
+
+#  Media de criminalidad por comunidad y parámetro
+criminalidad_parametro <- datos_criminalidad_total %>%
+  group_by(comunidad, Parámetro) %>%
+  summarise(
+    Criminalidad_media = mean(`Denuncias (Dato acumulados)`, na.rm = TRUE)
+  ) %>%
+  ungroup()
+
+#  Media de fumadores por comunidad
+fumadores_media <- tabla_fumadores %>%
+  filter(Comunidad != "Total Nacional") %>%
+  group_by(Comunidad) %>%
+  summarise(Fumadores_media = mean(Valor, na.rm = TRUE))
+
+#  Unir criminalidad y fumadores
+datos_union_parametro <- left_join(
+  criminalidad_parametro,
+  fumadores_media,
+  by = c("comunidad" = "Comunidad")
+)
+
+# Parámetros a analizar
+parametros <- c("Secuestro",
+                "Robos con violencia e intimidación",
+                "Hurtos",
+                "Tráfico de drogas",
+                "Sustracciones de vehículos",
+                "Homicidios dolosos y asesinatos consumados",
+                "Agresión sexual con penetración",
+                "Robos con fuerza en domicilios, establecimientos y otras instalaciones"
+)
+
+# Generar gráficos en un bucle y guardarlos en lista
+graficos <- lapply(parametros, function(p) {
+  datos_param <- datos_union_parametro %>%
+    filter(Parámetro == p)
+  
+  ggplot(datos_param, aes(x = Criminalidad_media, y = Fumadores_media)) +
+    geom_point(color = "darkred", size = 3) +
+    geom_smooth(method = "lm", color = "gold", se = TRUE) +
+    geom_text_repel(aes(label = comunidad), size = 3) +
+    labs(
+      x = paste(p, "(media denuncias)"),
+      y = "Fumadores diarios (%)",
+      title = paste("Relación entre", p, "y Fumadores diarios"),
+      subtitle = "Comparativa por Comunidades Autónomas"
+    ) +
+    theme_minimal(base_size = 14) +
+    theme(
+      plot.title = element_text(face = "bold", size = 16),
+      plot.subtitle = element_text(size = 12),
+      axis.title = element_text(face = "bold")
+    )
+})
+
+# Mostrar los gráficos uno a uno
+for (g in graficos) {
+  print(g)
+}
+
+#los parámetros son:
+#Secuestro,Robos con violencia e intimidación, Hurtos,Tráfico de drogas,Sustracciones de vehículos,Homicidios dolosos y asesinatos consumados
+
+```
 
