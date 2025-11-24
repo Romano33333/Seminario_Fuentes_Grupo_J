@@ -1,0 +1,1293 @@
+---
+#datos que aparecerán en la cabecera del html
+title: "Análisis Integral: Criminalidad, Salud Mental y Hábitos de Fumado en España"
+subtitle: "Un estudio correlacional por Comunidades Autónomas"
+author: "Pablo Romano Aragón y David Temiño Macaya"
+date: "`r Sys.Date()`"
+output: 
+  html_document: #vamos a generar un html con el boton knit
+    theme: flatly #tema predefinido para el html
+    highlight: tango #colores al mostrar bloques de r
+    toc: true #genera un indice
+    toc_float:  #la tabla de contenido será
+      collapsed: false #no colapsado
+      smooth_scroll: true #y un scroll suave
+    toc_depth: 3 #3 niveles de encabezado
+    number_sections: true #numero de secciones 
+    code_folding: show #los código apareceran colapsables
+    fig_width: 12 #las figuras tendrán siempre estas dimensiones
+    fig_height: 8
+    css: "styles.css" #indica un archivo css,lenguaje de estilos que define la apariencia visual de los documentos web, como su color, fuentes y disposición
+references:
+  - id: criminalidad
+    title: "Criminalidad autonómica"
+    URL: "https://www.epdata.es/datos/crimen-espana-hoy-asesinatos-robos-secuestros-otros-delitos/4/espana/106"
+
+  - id: ataques_corazon
+    title: "Ataques al corazón por comunidad autónoma (INE)"
+    URL: "https://www.ine.es/jaxi/Datos.htm?tpx=46687#_tabs-tabla"
+
+  - id: fumadores
+    title: "Densidad de fumadores por comunidad autónoma (INE)"
+    URL: "https://www.ine.es/jaxiT3/Datos.htm?t=69667#_tabs-tabla"
+
+  - id: salud_mental
+    title: "Datos de salud mental (INE)"
+    URL: "https://www.ine.es/jaxi/Datos.htm?path=/t15/p419/a2011/p01/l0/&file=01056.px#_tabs-tabla"
+
+  - id: calidad_aire
+    title: "Calidad del aire en España"
+    URL: "https://www.miteco.gob.es/es/calidad-y-evaluacion-ambiental/temas/atmosfera-y-calidad-del-aire/evaluacion-y     -datos-de-calidad-del-aire/datos.html"
+
+  - id: poblacion
+    title: "Población por comunidad autónoma (INE)"
+    URL: "https://www.ine.es/jaxiT3/Tabla.htm?t=2853"
+---
+```{css, echo=FALSE}
+/* Estilos CSS personalizados para un diseño propio,no es necesario un archivo externo css */
+/*echo=FALSE, significa que no aparecerá en el documento html*/
+body { /*esto sera el cuerpo, el fondo básicamente*/
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;/*tipografía genrañ*/
+  line-height: 1.6;/*altura de la linea*/
+  color: #2c3e50;/*color del texto*/
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);/*el fondo es un degradado gris-azulado en diagonal*/
+}
+
+.main-container {/*contenedor principal*/
+  max-width: 1200px;/*limitamos el ancho del contenido*/
+  margin: 0 auto;/*centramos el contenido,en horizontal*/
+  background: white;/*fondo blanco*/
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);/*sombra alrededor del contendo*/
+  border-radius: 10px;/*bordes redondeados*/
+  padding: 30px;/*espacio interno*/
+}
+
+h1, h2, h3 {/*estilo de encabezado*/
+  color: #2c3e50;/*color del texto del encabezado*/
+  border-bottom: 3px solid #3498db;/*línea azul debajo de cada título*/
+  padding-bottom: 10px;/*espacio entre texto y linea*/
+  margin-top: 30px;/*espacio superior*/
+}
+
+h1 {/*estilo del encabezado principal*/
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);/*el título tendrá un degradado azul-morado*/
+  color: white;/*el texto será blanco*/
+  padding: 20px;/*espacio interno, para que se vea más grande*/
+  border-radius: 10px;/*esquinas redondeadas*/
+  text-align: center;/*el título centrado*/
+  margin-bottom: 30px;/*separa el resto del contenido*/
+  border: none;/*quita la línea que hemos especificado antes*/
+}
+
+.subtitle {/*Subtítulo*/
+  text-align: center;/*centra el subtítulo */
+  font-style: italic;/*lo pone en cursiva*/
+  color: #7f8c8d;/*el color será un gris suave*/
+  margin-bottom: 40px;/*separación inferio*/
+}
+
+.section-intro {/*caja de introducción de secciones*/
+  background: #ecf0f1;/*dondo gris claro*/
+  padding: 20px;/*espacio interno*/
+  border-left: 5px solid #3498db;/*línea azul gruesa para decorar*/
+  margin: 20px 0;/*separción respecto arriba y abajo*/
+  border-radius: 5px;/*bordes redondeados*/
+}
+
+.highlight-box {/*Caja resalada*/
+  background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);/*fondo degradado azul brillante*/
+  color: white;/*color blanco*/
+  padding: 20px;/*espacio interno */
+  border-radius: 10px;/*bordes redondeados*/
+  margin: 20px 0;/*margen */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);/*sombra pronunciad*/
+}
+
+.conclusion-box {/*caja de conclusiones*/
+  background: linear-gradient(135deg, #00b894 0%, #00a085 100%);/*fondo degradado pero en verde*/
+  color: white;/*color texto blanco*/
+  padding: 20px;/*espacio interiro*/
+  border-radius: 10px;/*bordes redondeados*/
+  margin: 20px 0;/*margen*/
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);/*sombra*/
+}
+
+.warning-box {/*caja de advertencia*/
+  background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);/*fondo degradado naranja rojo*/
+  color: white;/*blanco el texto*/
+  padding: 20px;/*espacio interior*/
+  border-radius: 10px;/*borde redondeado*/
+  margin: 20px 0;/*margen*/
+  box-shadow: 0 5px 15px gba(0,0,0,0.2);/*sombras*/
+}
+
+.code-explanation {/*caja para explicar código*/
+  background: #f8f9fa;/*fondo blanco-gris*/
+  border: 1px solid #dee2e6;/*borde fino*/
+  border-radius: 5px;/*bordes redondeados*/
+  padding: 15px;/*espacio interior */
+  margin: 10px 0;/*margen*/
+}
+
+.stats-card {/*tarjetas de estadistica*/
+  background: white;/*fondo blanco*/
+  border: 1px solid #dee2e6;/*borde fino*/
+  border-radius: 10px;/*borde redondeado*/
+  padding: 20px;/*espacio interno*/
+  margin: 15px 0;/*margen */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);/*sombras*/
+}
+
+pre {/*formato de los códigos mostrados*/
+  background: #2c3e50 !important;/*fondo oscuro elegante, el important es para que tenga prioridad*/
+  color: #ecf0f1 !important;/*texto blanco*/
+  border-radius: 5px;/*borde redondeado*/
+  padding: 15px;/*espacio interno*/
+}
+
+.table {/*tablas*/
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);/*sombras*/
+  border-radius: 10px;/*bordes redondeados*/
+  overflow: hidden;/*es para que las esquinas se borden bien*/
+}
+.biblio-container {
+  background: #f8f9fa;
+  padding: 25px;
+  border-radius: 12px;
+  border-left: 6px solid #4a90e2;
+  font-family: "Segoe UI", Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+.biblio-container h2 {
+  margin-top: 0;
+  font-size: 28px;
+  color: #2c3e50;
+}
+.biblio-item {
+  margin-bottom: 12px;
+}
+.biblio-item span {
+  font-weight: 600;
+  color: #34495e;
+}
+.biblio-item a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+.biblio-item a:hover {
+  text-decoration: underline;
+}
+```
+```{r setup, include=FALSE}
+# Cargar librerías
+library(tidyverse)
+library(readr)
+library(readxl)
+library(jsonlite)
+library(stringr)
+library(tidyr)
+library(kableExtra)
+library(ggrepel)
+library(scales)
+library(reshape2)
+library(patchwork)
+knitr::opts_chunk$set( #esto definirá por defecto todos los chunks
+  echo = TRUE, #mostrará todos los códigos
+  message = FALSE,#no aparece mensajes en el html
+  warning = FALSE,#no aparece warnings en el html
+  fig.align = 'center',#todas las figuras se centrarám
+  fig.width = 12,#tamaño por defecto(otra vez) de todas las figuras
+  fig.height = 8,
+  dpi = 300#la calidad de impresión de un figura será alta
+)
+
+# Configurar tema de ggplot2 personalizado
+
+theme_espectacular <- theme_minimal(base_size = 14) + #personalizamos un tema propio de gráficos,partiendo del minimal
+  theme(
+    plot.title = element_text(size = 18, face = "bold", color = "#2c3e50", hjust = 0.5),#el titulo
+    plot.subtitle = element_text(size = 14, color = "#7f8c8d", hjust = 0.5),#el subtitulo
+    axis.title = element_text(size = 12, face = "bold", color = "#34495e"),#
+    axis.text = element_text(size = 10, color = "#2c3e50"),
+    legend.title = element_text(size = 12, face = "bold"),#las leyendas
+    legend.text = element_text(size = 10),#el texto de la leyenda
+    panel.grid.major = element_line(color = "#ecf0f1", size = 0.5),#lineas de grid,guías horizontales y verticales que se usan para organizar y alinear elementos en pantallas, hojas de cálculo o gráficos
+    panel.grid.minor = element_line(color = "#f8f9fa", size = 0.3),
+    plot.background = element_rect(fill = "white", color = NA),#fondo blanco para el plot
+    panel.background = element_rect(fill = "white", color = NA),##fondo blanco  para el panel
+    legend.background = element_rect(fill = "white", color = NA),#fondo blanco para la leyenda
+    strip.background = element_rect(fill = "#3498db", color = NA),#esto es para las barras de facetas
+    strip.text = element_text(color = "white", face = "bold")#para las brarras de facetas
+  )#esto servira para que todos los ggplot tengan la mismas estética
+
+# Establecer como tema por defecto
+theme_set(theme_espectacular)#establecemos el tema creado como predeterminado para todos
+
+# Paleta de colores personalizada
+colores_espectaculares <- colores_espectaculares <- c(
+  "#3498db", "#e74c3c", "#2ecc71", "#f39c12",
+  "#9b59b6", "#1abc9c", "#34495e", "#e67e22",
+  "#16a085", "#8e44ad", "#c0392b", "#27ae60",
+  "#d35400", "#2980b9", "#7f8c8d", "#f1c40f"
+)
+```
+
+# Introducción{.tabset}
+
+<div class="section-intro"> <!--Asigna un contenedor HTML con la clase section-intro,predefinidad en el css  -->
+En este trabajo se explora la relación entre indicadores de **criminalidad**
+(por tipo de delito y por comunidad autónoma), **salud mental**, **fumadores diarios**,**ataques al corazon**.
+El documento contiene: importación de datos (CSV y JSON), limpieza, estadísticas
+descriptivas y visualizaciones comparativas. El código R está mostrado en su
+parcialidad para facilitar el estudio del análisis
+
+**Objetivo del Estudio:** Este análisis investiga las posibles correlaciones entre cuatro variables en España: los niveles de criminalidad, los problemas de salud mental, los fumadores diarios y enfermedades cardiovasculares, analizados por Comunidades Autónomas.
+
+**Hipótesis Principal:** Existe una correlación significativa entre los niveles de criminalidad, los problemas de salud mental y el porcentaje de fumadores diarios en las diferentes comunidades autónomas españolas.
+</div>
+
+## Metodología
+<!-- se crea otra pestaña por lo de tabset  -->
+<div class="highlight-box"> <!-- usa el cuadro azul brillante predefinido -->
+**Enfoque Metodológico:**
+- **Análisis Correlacional:** Estudio de las relaciones entre variables
+- **Análisis por Género:** Diferenciación entre hombres, mujeres y población general
+- **Análisis Temporal:** Evolución de los indicadores a lo largo del tiempo
+- **Análisis Geográfico:** Comparación entre Comunidades Autónomas
+</div>
+
+## Fuentes de Datos
+<!--tercera pestaña  -->
+<div class="stats-card"> <!-- aplica la caja blanca con borde y sombra -->
+**Datos Utilizados:**
+- **Salud Mental:** Datos oficiales por comunidades autónomas
+- **Criminalidad:** Estadísticas de denuncias por tipo de delito
+- **Fumadores:** Porcentaje de fumadores diarios por región
+</div>
+
+
+# Preparación del entorno 
+
+```{r preparación_del_entorno, echo=TRUE, message=FALSE, warning=FALSE}
+# Establecer CRAN mirror para evitar preguntas interactivas en knitting
+options(repos = c(CRAN = "https://cloud.r-project.org/"))
+
+# Paquetes necesarios
+pkgs <- c("tidyverse", "readr", "readxl", "jsonlite", "stringr", "tidyr",
+          "kableExtra", "ggrepel", "scales", "reshape2", "patchwork")
+
+inst <- pkgs[!pkgs %in% installed.packages()[, "Package"]]#para instalar todos los paquetes necesarios
+if(length(inst)) install.packages(inst)
+
+
+
+# Opciones de presentación de tablas en HTML
+options(knitr.kable.NA = "")
+```
+# Carga y Procesamiento de Datos
+
+## Datos de Salud Mental
+
+<div class="code-explanation"> <!-- recuardo gris para explicar codigo -->
+**Explicación del Código:** Cargamos los datos de salud mental desde archivos CSV con codificación UTF-8. Los datos contienen información desagregada por sexo y comunidad autónoma.
+</div>
+```{r carga_salud_mental}
+carpeta_salud <- "INPUT/DATA/Salud_Mental" #donde estan los datos
+archivos_salud <- list.files(carpeta_salud, pattern = "_UTF8\\.csv$", full.names = TRUE)#buscamos todos los datos
+#busca archivos dentro de la carpeta,solo selecciona aquellos cuyo nombre contiene _UTF8.CSV(INDICAMOS UN . LITERAL)
+#devuelve la ruta completa
+
+salud_mental <- read_delim(#leemos los archivos,paquete readr 
+archivos_salud,#la lista de archivos
+delim = ";",#la columnas estan separadas por ;
+id = "archivo",#añadimos un columna nueva que se llama archivo(su archivo)
+trim_ws = TRUE,#sirve para eliminar espacios en blanco al principio y al final del texto
+show_col_types = FALSE#evitamos que readr imprima mensajes raros
+)
+
+# Mostrar las primeras filas para comprobar estructura
+
+knitr::kable(head(salud_mental, 6), caption = "Tabla visual: Salud Mental")#selecionamos las 6 primeras filas
+#del paquete knitr,transforma el dataframe en una tabla presentable
+```
+
+Explicación: read_delim() con id = "archivo" añade una columna indicando el fichero de origen .
+
+<!-- ====================================================================== -->
+## Limpieza del data frame — Salud Mental
+
+Homogeneizamos los nombres de las comunidades y extraemos el resumen
+(media por comunidad y sexo que utilizaremos).
+
+```{r}
+salud_mental2 <- salud_mental %>%
+rename(Comunidad = `Comunidades y Ciudades Autónomas`) %>%
+mutate(
+Comunidad = case_when(
+Comunidad == "Andalucía"                   ~ "Andalucia",
+Comunidad == "Aragón"                      ~ "Aragon",
+Comunidad == "Asturias, Principado de"     ~ "Principado De Asturias",
+Comunidad == "Balears, Illes"              ~ "Islas Baleares",
+Comunidad == "Castilla-La Mancha"          ~ "Castilla La Mancha",
+Comunidad == "Castilla y León"             ~ "Castilla Y Leon",
+Comunidad == "Comunitat Valenciana"        ~ "Comunidad Valenciana",
+Comunidad == "Madrid, Comunidad de"        ~ "Comunidad De Madrid",
+Comunidad == "Murcia, Región de"           ~ "Region De Murcia",
+Comunidad == "Navarra, Comunidad Foral de" ~ "Comunidad Foral De Navarra",
+Comunidad == "País Vasco"                  ~ "Pais Vasco",
+Comunidad == "Rioja, La"                   ~ "La Rioja",
+TRUE ~ Comunidad
+)
+)
+
+salud_resumen <- salud_mental2 %>%
+  filter(
+  `Total Nacional` == "Total",
+  `Número medio`   == "Media",
+  Sexo %in% c("AMBOS SEXOS","MUJERES","HOMBRES")
+  ) %>%
+  select(
+  comunidad   = Comunidad,
+  Sexo,
+  SaludMental = Total
+  ) %>%
+  mutate(SaludMental = parse_number(SaludMental))
+
+knitr::kable(head(salud_resumen, 12), caption = "Resumen: Salud mental (comunidad, sexo, valor)")
+```
+## Datos de Criminalidad
+
+<div class="code-explanation">
+**Explicación del Código:** Procesamos múltiples archivos CSV de criminalidad, extrayendo el nombre de la comunidad autónoma del nombre del archivo y unificando todos los datos en una sola tabla.
+</div>
+
+```{r carga_criminalidad}
+# Configurar ruta de criminalidad
+ruta_criminalidad <- "INPUT/DATA/CRIMINALIDAD"#la ruta de donde se encuetntra
+archivos <- list.files(path = ruta_criminalidad, pattern = "*.csv", full.names = TRUE)#buscamos todos los datos
+#busca archivos dentro de la carpeta,solo selecciona aquellos cuyo nombre contiene _UTF8.CSV(INDICAMOS UN . LITERAL)
+#devuelve la ruta completa
+
+# Función para procesar cada CSV y añadir la columna comunidad
+procesar_csv <- function(f) {
+  df <- read_csv2(f)  # read_csv2 usa ";" como separador, 
+  comunidad <- f %>%
+    basename() %>%#extrae solo el nombre del archivo
+    str_remove("\\.csv$") %>%#quita la extensión csv
+    str_to_lower() %>%#en minuscula
+    str_extract("(?<=en_).*") %>%#extrae solo el nombre despues de en_,?busca texto y .*extrae todo lo que sigue
+    str_replace_all("_+", " ") %>%#reemplaza guiones bajos por espacios
+    str_replace_all("-", " ") %>%#reemplaza guiones por espacios
+    str_squish() %>%#elimina espacios 
+    str_to_title()#pone la primera letra en mayuscual
+    
+  df$comunidad <- comunidad#añade la columna comunidad
+  return(df)#devuelve el data.frame
+}
+
+
+# Aplicar a todos los archivos y unir
+datos_criminalidad_total <- bind_rows(lapply(archivos, procesar_csv))
+```
+## Datos de Enfermedades cardiovasculares
+
+<div class="code-explanation">
+**Explicación del Código:** Procesamos múltiples archivos CSV de criminalidad, extrayendo el nombre de la comunidad autónoma del nombre del archivo y unificando todos los datos en una sola tabla.
+</div>
+```{r carga enfermedades_cardiovasculares}
+carpeta_cardio <- "INPUT/DATA/Enfermedades_Cardiovasculares"
+
+archivos_cardio <- list.files(
+  carpeta_cardio,
+  pattern = "_UTF8\\.csv$",
+  full.names = TRUE
+)
+
+Enf_card <- read_delim(
+  archivos_cardio,
+  delim = ";",
+  id = "archivo",
+  trim_ws = TRUE,
+  show_col_types = FALSE
+)
+```
+
+
+## Datos de Fumadores
+
+<div class="code-explanation">
+**Explicación del Código:** Procesamos los datos de fumadores diarios desde un archivo JSON, extrayendo las series temporales y normalizando los nombres de las comunidades.
+</div>
+
+```{r}
+ruta_json <- "Fumadores/fumadores_diarios.json"
+# Cargar datos de fumadores
+datos_fumadores <- fromJSON(ruta_json)
+# Procesar datos de fumadores
+tabla_data <- datos_fumadores %>%
+  select(Nombre, Data) %>%
+  unnest(Data)#convierte una fila con un tabla dentro en varias columnas
+# Crear tabla elegante
+tabla_data2 <- tabla_data %>%
+  select(Nombre, Anyo, Valor)
+
+tabla_data2 %>%
+  head(20) %>%
+  kable("html", 
+        caption = " Fumadores Diarios por Comunidad",
+        col.names = c("Descripción", "Año", "Porcentaje (%)")) %>%
+  kable_styling(
+    full_width = FALSE, 
+    bootstrap_options = c("striped", "hover", "condensed"),
+    position = "center"
+  ) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#3498db")
+```
+## Procesamiento de fumadores
+```{r procesamiento_fumadores}
+# Extraer comunidad y procesar datos
+tabla_fumadores <- datos_fumadores %>%
+  select(Nombre, Data) %>%
+  unnest(Data) %>%
+  mutate(
+    Comunidad = str_extract(Nombre, "(?<=\\. ).*?(?=\\.)")
+  ) %>%
+  select(Comunidad, Anyo, Valor) %>%
+  # Normalizar nombres de comunidades
+  mutate(
+    Comunidad = case_when(
+      Comunidad == "Andalucía"                   ~ "Andalucia",
+      Comunidad == "Aragón"                      ~ "Aragon",
+      Comunidad == "Asturias, Principado de"     ~ "Principado De Asturias",
+      Comunidad == "Balears, Illes"              ~ "Islas Baleares",
+      Comunidad == "Castilla-La Mancha"          ~ "Castilla La Mancha",
+      Comunidad == "Castilla y León"             ~ "Castilla Y Leon",
+      Comunidad == "Comunitat Valenciana"        ~ "Comunidad Valenciana",
+      Comunidad == "Madrid, Comunidad de"        ~ "Comunidad De Madrid",
+      Comunidad == "Murcia, Región de"           ~ "Region De Murcia",
+      Comunidad == "Navarra, Comunidad Foral de" ~ "Comunidad Foral De Navarra",
+      Comunidad == "País Vasco"                  ~ "Pais Vasco",
+      Comunidad == "Rioja, La"                   ~ "La Rioja",
+      TRUE ~ Comunidad
+    )
+  )
+
+# Mostrar tabla procesada
+tabla_fumadores %>%
+  head(15) %>%
+  kable("html", 
+        caption = "Datos Procesados de Fumadores Diarios por Comunidad Autónoma",
+        col.names = c("Comunidad Autónoma", "Año", "Porcentaje de Fumadores (%)")) %>%
+  kable_styling(
+    full_width = FALSE, 
+    bootstrap_options = c("striped", "hover", "condensed"),
+    position = "center"
+  ) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#e74c3c")
+
+```
+# Análisis Integral: Criminalidad y  Salud Mental 
+
+<div class="code-explanation">
+**Explicación del Código:** Unimos los datos de criminalidad con los problemas de salud mental para analizar su correlación.Relacionaremos máximos y minimos
+</div>
+
+```{r criminalidad_salud_mental}
+# Resumen de crimen por comunidad
+salud_resumen <- salud_mental2 %>%
+  filter(
+    `Total Nacional` == "Total",
+    `Número medio`   == "Media",
+    Sexo %in% c("AMBOS SEXOS","MUJERES","HOMBRES")
+  ) %>%
+  select(
+    comunidad   = Comunidad,
+    Sexo,
+    SaludMental = Total
+  ) %>%
+  mutate(
+    SaludMental = parse_number(SaludMental)  # convertimos los datos de salud mental a números para poder trabajar con ellos
+  )
+
+
+# Resumen de crimen por comunidad
+
+criminalidad_resumen <- datos_criminalidad_total %>%
+  mutate(
+    comunidad = str_replace(comunidad, "^En\\s+", "")
+  ) %>%
+  group_by(comunidad) %>%
+  summarise(
+    Criminalidad = mean(`Denuncias (Dato acumulados)`, na.rm = TRUE)
+  )
+
+# Unión de criminalidad + salud mental por comunidad
+datos_resumen <- left_join(
+  criminalidad_resumen,
+  salud_resumen,
+  by = "comunidad"
+)
+datos_ambos<-datos_resumen%>%
+  filter(Sexo=="Ambos")
+comparacion_ambos <- datos_ambos %>%
+  filter(
+    SaludMental == max(SaludMental, na.rm = TRUE) |
+      SaludMental == min(SaludMental, na.rm = TRUE)
+  )
+datos_ambos <- datos_resumen %>% 
+  filter(Sexo == "HOMBRES")
+comparacion_hombres <- datos_ambos %>%
+  filter(
+    SaludMental == max(SaludMental, na.rm = TRUE) |
+      SaludMental == min(SaludMental, na.rm = TRUE)
+  )
+datos_ambos <- datos_resumen %>% 
+  filter(Sexo == "MUJERES")
+comparacion_mujeres <- datos_ambos %>%
+  filter(
+    SaludMental == max(SaludMental, na.rm = TRUE) |
+      SaludMental == min(SaludMental, na.rm = TRUE)
+  )
+criminalidad_resumen <- datos_criminalidad_total %>%
+  mutate(
+    comunidad = str_replace(comunidad, "^En\\s+", "")
+  ) %>%
+  group_by(comunidad) %>%
+  summarise(
+    Criminalidad = mean(`Denuncias (Dato acumulados)`, na.rm = TRUE)
+  )
+
+# Unión de criminalidad + salud mental por comunidad
+datos_resumen <- left_join(
+  criminalidad_resumen,
+  salud_resumen,
+  by = "comunidad"
+)
+# Ver la comunuidad con mayor y menor tasa de salud mental y ver si hay relación con la criminalidad para ambos sexos, hombres y mujeres
+# Crear tabla unificada
+tabla_comparacion <- bind_rows(
+  comparacion_ambos   %>% mutate(Grupo = "Ambos Sexos"),
+  comparacion_hombres %>% mutate(Grupo = "Hombres"),
+  comparacion_mujeres %>% mutate(Grupo = "Mujeres")
+) %>%
+  select(Grupo, comunidad, SaludMental, Criminalidad) %>%
+  
+  # Ordenar alfabeticamente por comunidad y luego por grupo
+  mutate(
+    Grupo = factor(Grupo, levels = c("Ambos Sexos", "Hombres", "Mujeres"))
+  ) %>%
+  arrange(comunidad, Grupo) %>%
+  
+  # Renombrar columnas
+  rename(
+    Comunidad = comunidad,
+    `Casos Salud Mental` = SaludMental,
+    `Índice de Criminalidad` = Criminalidad
+  )
+
+# Tabla bonita
+tabla_comparacion %>%
+  kable(
+    "html",
+    caption = "Comparación Salud Mental y Criminalidad por Comunidad y Sexo",
+    col.names = c("Grupo", "Comunidad", "Casos Salud Mental", "Índice de Criminalidad")
+  ) %>%
+  kable_styling(
+    full_width = FALSE,
+    bootstrap_options = c("striped", "hover", "condensed"),
+    position = "center"
+  ) %>%
+  row_spec(0, bold = TRUE, background = "#2C3E50", color = "white")
+str(tabla_comparacion)
+
+```
+<div class="code-explanation">
+**Explicación del Código:** Unimos los datos de criminalidad con los problemas de salud mental para analizar su correlación,visualización en su totalidad.Relacionaremos máximos y minimos
+</div>
+```{r total_criminalidad_salud mental}
+# Preparar tabla completa
+tabla_completa <- datos_resumen %>%
+  mutate(
+    Grupo = factor(Sexo, levels = c("AMBOS SEXOS", "HOMBRES", "MUJERES"))
+  ) %>%
+  select(Grupo, Comunidad = comunidad, `Casos Salud Mental` = SaludMental, `Índice de Criminalidad` = Criminalidad) %>%
+  arrange(Comunidad, Grupo)
+
+# Resaltar máximos y mínimos de Salud Mental por Grupo
+tabla_completa <- tabla_completa %>%
+  group_by(Grupo) %>%
+  mutate(
+    max_salud = `Casos Salud Mental` == max(`Casos Salud Mental`, na.rm = TRUE),
+    min_salud = `Casos Salud Mental` == min(`Casos Salud Mental`, na.rm = TRUE)
+  ) %>%
+  ungroup()
+
+# Crear tabla con kableExtra
+tabla_completa %>%
+  kable("html", caption = "Salud Mental y Criminalidad por Comunidad y Grupo") %>%
+  kable_styling(
+    full_width = FALSE,
+    bootstrap_options = c("striped", "hover", "condensed"),
+    position = "center"
+  ) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#3498db") %>%
+  row_spec(which(tabla_completa$max_salud), bold = TRUE, color = "white", background = "#e74c3c") %>%
+  row_spec(which(tabla_completa$min_salud), bold = TRUE, color = "white", background = "#2ecc71")
+```
+<div class="code-explanation">
+**Explicación del Código:** Creación de gráfica interactiva para ver la correlación entrela criminalidad y la salud mental.Ambos sexos
+</div>
+```{r grafico_salud_criminalidad_ambos}
+ggplot(datos_ambos, aes(x = Criminalidad, y = SaludMental)) +
+  geom_point(colour = "red") +
+  geom_smooth(method = "lm", se = TRUE, colour = "gold") +
+  geom_text_repel(aes(label = comunidad), size = 3) +
+  labs(
+    x = "Criminalidad media (denuncias)",
+    y = "Problemas de salud mental (media)",
+    title = "Relación entre Criminalidad y Salud Mental",
+    subtitle = "Ambos sexos — Comunidades Autónomas"
+  )
+```
+<div class="code-explanation">
+**Explicación del Código:** Creación de gráfica interactiva para ver la correlación entrela criminalidad y la salud mental.Mujeres
+</div>
+```{r grafico_salud_criminalidad_mujeres}
+datos_mujeres <- datos_resumen %>%
+  filter(Sexo == "MUJERES")
+
+ggplot(data = datos_mujeres,
+       aes(x = Criminalidad, y = SaludMental)) +
+  geom_point(colour = "deeppink") +
+  geom_smooth(method = "lm", se = TRUE, colour = "red") +
+  geom_text_repel(aes(label = comunidad), size = 3) +
+  labs(
+    x = "Criminalidad media (denuncias)",
+    y = "Problemas de salud mental (media)",
+    title = "Relación entre criminalidad y salud mental",
+    subtitle = "Mujeres - Comunidades Autónomas"
+  )
+```
+<div class="code-explanation">
+**Explicación del Código:** Creación de gráfica interactiva para ver la correlación entrela criminalidad y la salud mental.Hombres
+</div>
+```{r grafico_salud_criminalidad_hombres}
+datos_hombres <- datos_resumen %>%
+  filter(Sexo == "HOMBRES")
+
+ggplot(data = datos_hombres,
+       aes(x = Criminalidad, y = SaludMental)) +
+  geom_point(colour = "blue") +
+  geom_smooth(method = "lm", se = TRUE, colour = "red") +
+  geom_text_repel(aes(label = comunidad), size = 3) +
+  labs(
+    x = "Criminalidad media (denuncias)",
+    y = "Problemas de salud mental (media)",
+    title = "Relación entre criminalidad y salud mental",
+    subtitle = "Hombres - Comunidades Autónomas"
+  )
+```
+<div class="highlight-box">
+  <h2> Análisis de Correlación: Salud Mental y Criminalidad</h2>
+  
+  <p><strong>Observaciones principales:</strong></p>
+  <ul>
+    <li><strong>Distribución por comunidad y sexo:</strong> Cada comunidad tiene tres grupos (AMBOS SEXOS, HOMBRES, MUJERES). Se observan diferencias notables entre géneros, por ejemplo Cantabria con hombres 338 y mujeres 319, mientras que Melilla tiene valores mucho menores (hombres 41, mujeres 29).</li>
+    <li><strong>Criminalidad vs Salud Mental:</strong> No se aprecia una relación lineal directa. Por ejemplo, Cantabria tiene muchos casos de salud mental pero criminalidad baja, mientras que Castilla-La Mancha muestra pocos casos de mujeres y criminalidad alta.</li>
+    <li><strong>Diferencias por género:</strong> Los hombres suelen presentar más casos de salud mental que las mujeres. Sin embargo, la criminalidad es la misma para ambos sexos dentro de cada comunidad, limitando la correlación diferenciada por género.</li>
+    <li><strong>Máximos y mínimos de salud mental:</strong> Cantabria y Melilla destacan como valores extremos. La criminalidad no refleja estos extremos de manera consistente.</li>
+  </ul>
+
+  <p><strong>Conclusión preliminar:</strong></p>
+  <ul>
+    <li>No hay evidencia de correlación fuerte entre casos de salud mental y el índice de criminalidad por comunidad.</li>
+    <li>La criminalidad parece depender de otros factores socioeconómicos o culturales no reflejados solo por los casos de salud mental.</li>
+    <li>Para un análisis más completo se recomienda calcular la correlación estadística y/o usar modelos de regresión incluyendo otras variables.</li>
+  </ul>
+</div>
+
+<div class="warning_box">
+**NO hemos tenido en cuenta la cantidad de población que hay **
+</div>
+```{r salud_criminalidad_población}
+poblacion_comunidades <- data.frame(
+  Comunidad = c("Andalucia","Aragon","Principado De Asturias","Islas Baleares","Canarias","Cantabria",
+                "Castilla La Mancha","Castilla Y Leon","Cataluña","Comunidad Valenciana",
+                "Extremadura","Galicia","Comunidad De Madrid","Region De Murcia","Comunidad Foral De Navarra",
+                "Pais Vasco","La Rioja","Ceuta","Melilla"),
+  Poblacion = c(8472407,#Andalucia
+                1326261,#Aragon 
+                1011792,#Asturias
+                1173008,#Islas baleares
+                2172944,#Canarias
+                584507,#Cantabria
+                2049562,#Castilla la mancha 
+                2383139,#Castilla y leon
+                7763362,#Cataluña
+                5058138,#Valencia 
+                1059501,#Extremadura
+                2695645,#Galicia
+                6751251,#Madrid
+                1518486,#Murcia
+                661537,#Navarra 
+                2213993,#Pais vasco
+                319796,#La rioja
+                83517,#Ceuta 
+                86261#Melilla
+                )
+)
+
+# Unimos población a los datos de salud mental/criminalidad
+tabla_tasas <- datos_resumen %>%
+  left_join(poblacion_comunidades, by = c("comunidad" = "Comunidad")) %>%
+  mutate(
+    Tasa_SaludMental = SaludMental / Poblacion * 1e5,
+    Tasa_Criminalidad = Criminalidad / Poblacion * 1e5
+  ) %>%
+  select(Sexo, comunidad, SaludMental, Criminalidad, Poblacion,
+         Tasa_SaludMental, Tasa_Criminalidad)
+
+  # Crear tabla bonita en HTML
+tabla_tasas %>%
+  kable("html", caption = "Tasas de Salud Mental y Criminalidad por 100.000 habitantes") %>%
+  kable_styling(full_width = FALSE, bootstrap_options = c("striped", "hover", "condensed")) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#3498db")
+```
+<div class="highlight-box">
+**Análisis Detallado con gráficas:** Examinamos la relación con graficas entre salud mental y tipos de criminalidad.
+</div>
+
+```{r arreglo_comunidad_salud_criminalidad}
+# Crear abreviaturas de comunidades largas
+tabla_tasas <- tabla_tasas %>%
+  mutate(Comunidad_abrev = case_when(
+    str_detect(comunidad, regex("Principado De Asturias", ignore_case = TRUE)) ~ "Asturias",
+    str_detect(comunidad, regex("Región De Murcia", ignore_case = TRUE)) ~ "Murcia",
+    str_detect(comunidad, regex("Comunidad De Madrid", ignore_case = TRUE)) ~ "Madrid",
+    str_detect(comunidad, regex("Comunidad Foral De Navarra", ignore_case = TRUE)) ~ "Navarra",
+    str_detect(comunidad, regex("Islas Baleares", ignore_case = TRUE)) ~ "Baleares",
+    TRUE ~ comunidad
+  ))
+ggplot(tabla_tasas, aes(x = Tasa_SaludMental, y = Tasa_Criminalidad, color = Sexo, label = Comunidad_abrev)) +
+  geom_point(size = 4, alpha = 0.8) +
+  geom_text_repel(size = 3, max.overlaps = 20) +  # Evita solapamiento de etiquetas
+  facet_wrap(~Sexo) +
+  theme_espectacular +
+  labs(
+    title = "Comparación de Criminalidad vs. Tasa de Casos de Salud Mental",
+    subtitle = "Por Comunidad Autónoma y Sexo (por 100.000 habitantes)",
+    x = "Tasa de Salud Mental (por 100.000 hab.)",
+    y = "Índice de Criminalidad",
+    color = "Sexo"
+  ) +
+  scale_x_continuous(labels = comma) +
+  scale_y_continuous(labels = comma) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    plot.title = element_text(size = 16, face = "bold"),
+    plot.subtitle = element_text(size = 12)
+  ) +
+  scale_color_manual(values = c("AMBOS SEXOS" = "#3498db", "HOMBRES" = "#e74c3c", "MUJERES" = "#2ecc71"))
+  
+```
+<div class="conclusion-box">
+  <h3> Conclusión Estadística Mejorada</h3>
+  <ul>
+    <li><strong>Normalización por población:</strong> Ahora las comparaciones entre comunidades son más justas. Comunidades pequeñas con pocos casos absolutos pueden tener tasas altas, mientras que comunidades grandes con muchos casos absolutos pueden tener tasas moderadas.</li>
+    <li><strong>Correlación:</strong> Tras normalizar, todavía no se observa una correlación fuerte entre salud mental y criminalidad en la mayoría de las comunidades. Esto indica que los factores que afectan la salud mental no están directamente relacionados con el nivel de criminalidad por habitante.</li>
+    <li><strong>Diferencias por género:</strong> Las tasas difieren entre hombres y mujeres, por lo que cualquier intervención o análisis debe considerar el sexo de la población.</li>
+    <li><strong>Uso práctico:</strong> Este tipo de análisis es útil para priorizar recursos y políticas públicas según la proporción real de afectados en cada comunidad, en lugar de simplemente mirar los números absolutos.</li>
+  </ul>
+</div>
+
+# Análisis integral: Criminalidad y enfermedades cardiovascualares
+
+## Crimen anual por comunidad y tipo
+<div class="code_explanation ">
+
+</div>
+
+```{r crimen_anual_comunidad_tipo }
+# Limpiar nombre de comunidad y quedarnos solo con años tipo "2023"
+criminalidad_limpia <- datos_criminalidad_total %>%
+  mutate(
+    comunidad = str_replace(comunidad, "^En\\s+", "")
+  ) %>%
+  filter(str_detect(Año, "^[0-9]{4}$"))
+
+# Sumar los 4 trimestres: comunidad + Año + Parámetro
+crimen_anual <- criminalidad_limpia %>%
+  group_by(comunidad, Año, Parámetro) %>%
+  summarise(
+    Denuncias_anuales = sum(`Denuncias (Dato acumulados)`, na.rm = TRUE)
+  )
+```
+
+## Limpieza enfermedades cardiovasculares y unión con criminalidad
+
+```{r limpieza_enf_car_criminalidad}
+Enf_card2 <- Enf_card %>%
+  rename(Comunidad = `Comunidades y Ciudades Autónomas`) %>%
+  mutate(
+    Comunidad = str_remove(Comunidad, "^[0-9]{2} "),
+    Comunidad = case_when(
+      Comunidad == "Andalucía"                   ~ "Andalucia",
+      Comunidad == "Aragón"                      ~ "Aragon",
+      Comunidad == "Asturias, Principado de"     ~ "Principado De Asturias",
+      Comunidad == "Balears, Illes"              ~ "Islas Baleares",
+      Comunidad == "Canarias"                    ~ "Canarias",
+      Comunidad == "Cantabria"                   ~ "Cantabria",
+      Comunidad == "Castilla-La Mancha"          ~ "Castilla La Mancha",
+      Comunidad == "Castilla y León"             ~ "Castilla Y Leon",
+      Comunidad == "Cataluña"                    ~ "Cataluña",
+      Comunidad == "Ceuta"                       ~ "Ceuta",
+      Comunidad == "Comunitat Valenciana"        ~ "Comunidad Valenciana",
+      Comunidad == "Extremadura"                 ~ "Extremadura",
+      Comunidad == "Galicia"                     ~ "Galicia",
+      Comunidad == "Madrid, Comunidad de"        ~ "Comunidad De Madrid",
+      Comunidad == "Melilla"                     ~ "Melilla",
+      Comunidad == "Murcia, Región de"           ~ "Region De Murcia",
+      Comunidad == "Navarra, Comunidad Foral de" ~ "Comunidad Foral De Navarra",
+      Comunidad == "País Vasco"                  ~ "Pais Vasco",
+      Comunidad == "Rioja, La"                   ~ "La Rioja",
+      TRUE ~ Comunidad
+    ),
+    Año = as.character(Periodo)
+  )
+
+View(Enf_card2)
+
+# Unión de criminalidad anual + enfermedades cardiovasculares
+crimen_cardio <- left_join(
+  crimen_anual,
+  Enf_card2,
+  by = c("comunidad" = "Comunidad", "Año" = "Año")
+)
+view(crimen_cardio)
+
+# Versión sin NA en las dos variables clave
+crimen_cardio_limpio <- crimen_cardio %>%
+  filter(!is.na(Denuncias_anuales),
+         !is.na(Total))
+
+View(crimen_cardio_limpio)
+```
+
+## ¿Qué delitos se relacionan más con las enfermedades cardiovasculares?
+
+```{r del_enf_card}
+corr_por_delito <- crimen_cardio_limpio %>%
+  group_by(Parámetro) %>%
+  summarise(
+    correlacion = cor(Denuncias_anuales, Total)
+  ) %>%
+  arrange(desc(correlacion))
+
+View(corr_por_delito)
+
+corr_por_delito_plot <- corr_por_delito %>%
+  arrange(desc(correlacion)) %>%
+  mutate(
+    Parámetro = factor(Parámetro, levels = Parámetro)
+  )
+
+ggplot(corr_por_delito_plot,
+       aes(x = Parámetro, y = correlacion)) +
+  geom_bar(stat = "identity", fill = "gold1", colour = "black") +
+  coord_flip() +
+  labs(
+    x = "Tipo de delito",
+    y = "Correlación crimen–cardio",
+    title = "Relación entre cada delito y las enfermedades cardiovasculares"
+  )
+```
+  
+<div class="conclusion-box">
+  <p><strong>Respuesta:</strong> Los delitos con mayor relación (aunque negativa) con las enfermedades cardiovasculares son las sustracciones de vehículos, los robos con violencia e intimidación y los secuestros. Sin embargo, la relación no implica causalidad. Los resultados obtenidos muestran que todas las correlaciones son negativas y de magnitud débil, situándose entre –0.07 y –0.37. Esto indica que ningún tipo de delito presenta una relación clara o significativa con las enfermedades cardiovasculares, por lo que como conclusión sacamos que no hay relación entre la criminalidad y las enfermedades cardiovasculares.</p>
+</div>
+
+## ¿Qué comunidades muestran mayor relación entre criminalidad y enfermedades cardiovasculares?
+
+```{r rel_criminalidad_enf_card}
+ranking_comunidades <- crimen_cardio_limpio %>%
+  group_by(comunidad) %>%
+  summarise(
+    crimen_total     = sum(Denuncias_anuales),
+    enf_cardio_total = sum(Total)
+  ) %>%
+  mutate(
+    ratio = crimen_total / enf_cardio_total
+  ) %>%
+  arrange(desc(ratio))
+
+View(ranking_comunidades)
+
+ggplot(
+  data = ranking_comunidades,
+  aes(x = comunidad, y = ratio)
+  ) +
+  geom_bar(stat = "identity", fill = "blue", colour = "black") +
+  coord_flip()+
+  labs(
+    x = "Comunidad Autónoma",
+    y = "Ratio crimen / enf. cardiovasculares",
+    title = "Ratio entre criminalidad y enfermedades cardiovasculares",
+    subtitle = "Crimen_total / Enf_cardio_total por comunidad"
+  )
+```
+<div class="conclusion-box">
+  <p><strong>Respuesta:</strong> Los delitos con mayor relación (aunque negativa) con las enfermedades cardiovasculares son las sustracciones de vehículos, los robos con violencia e intimidación y los secuestros. Sin embargo, la relación no implica causalidad. Los resultados obtenidos muestran que todas las correlaciones son negativas y de magnitud débil, situándose entre –0.07 y –0.37. Esto indica que ningún tipo de delito presenta una relación clara o significativa con las enfermedades cardiovasculares, por lo que como conclusión sacamos que no hay relación entre la criminalidad y las enfermedades cardiovasculares.</p>
+</div>
+
+## Tengamos en cuenta la población que vive por comunidad
+### ¿Qué delitos se relacionan más con las enfermedades cardiovasculares teniendo en cuenta la poblacion?
+
+```{r rel_criminalidad_enf_card_poblacion }
+
+
+# Normalizar los datos por 100.000 habitantes
+crimen_cardio_tasas <- crimen_cardio_limpio %>%
+  left_join(poblacion_comunidades, by = c("comunidad" = "Comunidad")) %>%
+  mutate(
+    Tasa_Crimen = Denuncias_anuales / Poblacion * 1e5,
+    Tasa_EnfCardio = Total / Poblacion * 1e5
+  )
+
+# 1) Correlación por tipo de delito (por tasa)
+corr_por_delito_tasa <- crimen_cardio_tasas %>%
+  group_by(Parámetro) %>%
+  summarise(
+    correlacion = cor(Tasa_Crimen, Tasa_EnfCardio, use = "complete.obs")
+  ) %>%
+  arrange(desc(correlacion))
+
+# Gráfico de correlación por tipo de delito
+ggplot(corr_por_delito_tasa, aes(x = reorder(Parámetro, correlacion), y = correlacion)) +
+  geom_bar(stat = "identity", fill = "gold1", colour = "black") +
+  coord_flip() +
+  labs(
+    x = "Tipo de delito",
+    y = "Correlación crimen–enf. cardiovasculares (tasas)",
+    title = "Relación entre cada delito y las enfermedades cardiovasculares (normalizado por población)"
+  )
+```
+<div class="conclusion-box">
+  <h4> Delitos más relacionados con enfermedades cardiovasculares</h4>
+  <p>
+    Tras normalizar por población y calcular las correlaciones entre cada tipo de delito y los casos de enfermedades      cardiovasculares:
+  </p>
+  <ul>
+    <li>Los delitos con correlaciones positivas más altas son: <strong>Homicidios dolosos (≈0.8), Tráfico de drogas,          Secuestro y Sustracciones de vehículos</strong>.</li>
+    <li>Sin embargo, estas correlaciones son variables y no implican causalidad directa.</li>
+    <li>La mayoría de los delitos presentan correlaciones bajas o negativas, indicando que <strong>no existe una              relación clara entre la criminalidad y la incidencia de enfermedades cardiovasculares</strong>.</li>
+  </ul>
+</div>
+### ¿Qué comunidades muestran mayor relación entre criminalidad y enfermedades cardiovasculares?
+```{r}
+# 2) Ranking de comunidades según ratio de tasas
+ranking_comunidades_tasa <- crimen_cardio_tasas %>%
+  group_by(comunidad) %>%
+  summarise(
+    Tasa_Crimen_total = sum(Tasa_Crimen),
+    Tasa_EnfCardio_total = sum(Tasa_EnfCardio)
+  ) %>%
+  mutate(
+    ratio = Tasa_Crimen_total / Tasa_EnfCardio_total
+  ) %>%
+  arrange(desc(ratio))
+
+# Gráfico de ratio por comunidad
+ggplot(ranking_comunidades_tasa, aes(x = reorder(comunidad, ratio), y = ratio)) +
+  geom_bar(stat = "identity", fill = "steelblue", colour = "black") +
+  coord_flip() +
+  labs(
+    x = "Comunidad Autónoma",
+    y = "Ratio Tasa crimen / Tasa enf. cardiovasculares",
+    title = "Ratio entre criminalidad y enfermedades cardiovasculares normalizado por población",
+    subtitle = "Tasas por 100.000 habitantes"
+  )
+```
+<div class="conclusion-box">
+  <h4> Comparación entre comunidades autónomas</h4>
+  <p>
+    Analizando el <strong>ratio entre la tasa de criminalidad y la tasa de enfermedades cardiovasculares</strong> por     comunidad:
+  </p>
+  <ul>
+    <li>Comunidades grandes y densamente pobladas como <strong>Cataluña, Comunidad de Madrid y Andalucía</strong>             presentan ratios cercanos a 1, lo que refleja su alta concentración de delitos por habitante.</li>
+    <li>Comunidades pequeñas como <strong>Ceuta, Melilla, La Rioja o Cantabria</strong> muestran ratios bajos,                indicando que los casos de enfermedades cardiovasculares superan la criminalidad relativa.</li>
+    <li>Esto confirma que las diferencias observadas reflejan patrones poblacionales y estructurales, y <strong>no            implican que la criminalidad provoque enfermedades cardiovasculares</strong>.</li>
+  </ul>
+
+  <h4> Conclusión Final</h4>
+  <p>
+    Normalizar los datos por población es fundamental para comparar de forma justa entre comunidades. Aunque algunos      delitos muestran correlaciones positivas con enfermedades cardiovasculares, estas relaciones son débiles y no se      puede establecer causalidad. Las diferencias entre comunidades reflejan principalmente la densidad y tamaño           poblacional, por lo que <strong>no hay evidencia de que una mayor criminalidad implique un mayor nivel de             enfermedades cardiovasculares</strong>.
+  </p>
+</div>
+
+# Análisis integral: Criminalidad y fumadores diarios
+## Antes vamos a ver también la evolución de la criminalidad durante los años propuestos
+
+```{r crim_evol,fig.width=12, fig.height=8}
+# Filtrar solo los parámetros que nos interesan
+parametros <- c("Secuestro",
+                "Robos con violencia e intimidación",
+                "Hurtos",
+                "Tráfico de drogas",
+                "Sustracciones de vehículos",
+                "Homicidios dolosos y asesinatos consumados",
+                "Agresión sexual con penetración",
+                "Robos con fuerza en domicilios, establecimientos y otras instalaciones"
+)
+
+datos_criminalidad_parametros <- datos_criminalidad_total %>%
+  mutate(comunidad = str_replace(comunidad, "^En\\s+", "")) %>%
+  filter(Parámetro %in% parametros) %>%
+  group_by(comunidad, Parámetro, Año) %>%
+  summarise(Denuncias_anuales = sum(`Denuncias (Dato acumulados)`, na.rm = TRUE)) %>%
+  ungroup() %>%
+  mutate(Año = as.numeric(Año))
+
+graficos_facetas <- lapply(parametros, function(p) {
+  datos_param <- datos_criminalidad_parametros %>%
+    filter(Parámetro == p)
+  
+  ggplot(datos_param, aes(x = Año, y = Denuncias_anuales)) +
+    geom_line(color = "steelblue", size = 1) +
+    geom_point(color = "darkred", size = 2) +
+    facet_wrap(~comunidad, scales = "free_y") +
+    labs(
+      title = paste("Evolución de", p, "por Comunidad Autónoma"),
+      x = "Año",
+      y = "Denuncias acumuladas"
+    ) +
+    theme_minimal(base_size = 12) +
+    theme(
+      plot.title = element_text(face = "bold", size = 16),
+      axis.title = element_text(face = "bold")
+    )
+})
+
+# Mostrar gráficos
+for (g in graficos_facetas) {
+  print(g)
+}
+```
+
+## Relacion entre criminalidad por comunidades y fumadores diarios
+
+```{r graf_crim_fum}
+#  Limpiar nombres de comunidad en criminalidad
+criminalidad_media <- datos_criminalidad_total %>%
+  mutate(
+    comunidad = str_replace(comunidad, "^En\\s+", "")  # quitamos "En " al principio
+  ) %>%
+  group_by(comunidad) %>%
+  summarise(
+    Criminalidad_media = mean(`Denuncias (Dato acumulados)`, na.rm = TRUE)
+  )
+#  Filtrar la tabla de fumadores para que coincida con las comunidades
+fumadores_filtrado <- tabla_fumadores %>%
+  filter(Comunidad != "Total Nacional") %>%
+  group_by(Comunidad) %>%
+  summarise(
+    Fumadores_media = mean(Valor, na.rm = TRUE)
+  )
+# Unir ambas tablas
+datos_union <- left_join(criminalidad_media, fumadores_filtrado, 
+                         by = c("comunidad" = "Comunidad"))
+# Gráfico: Criminalidad vs Fumadores diarios
+ggplot(datos_union, aes(x = Criminalidad_media, y = Fumadores_media)) +
+  geom_point(color = "firebrick", size = 3) +
+  geom_smooth(method = "lm", color = "gold", se = TRUE) +
+  geom_text_repel(aes(label = comunidad), size = 3) +
+  labs(
+    x = "Criminalidad media (denuncias)",
+    y = "Fumadores diarios (%)",
+    title = "Relación entre Criminalidad y Fumadores diarios",
+    subtitle = "Comparativa por Comunidades Autónomas"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold", size = 16),
+    plot.subtitle = element_text(size = 12),
+    axis.title = element_text(face = "bold")
+  )
+```
+
+## Tabla comparativa 
+```{r tabl_crim-fum}
+# Crear tabla final comparativa
+tabla_fum_crimen <- datos_union %>%
+  arrange(desc(Fumadores_media)) %>%
+  mutate(
+    Criminalidad_media = round(Criminalidad_media, 2),
+    Fumadores_media = round(Fumadores_media, 2)
+  )
+tabla_fum_crimen %>%
+  kable("html", 
+        caption = "Criminalidad media vs Fumadores diarios por Comunidad",
+        col.names = c("Comunidad", "Criminalidad media (denuncias)", "Fumadores diarios (%)")) %>%
+  kable_styling(full_width = FALSE, bootstrap_options = c("striped", "hover", "condensed")) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#3498db")
+```
+
+<div class="conclusion-box">
+  <h3>Conclusión: Relación entre Criminalidad y Fumadores Diarios</h3>
+  <p>
+    Analizando la criminalidad media y el porcentaje de fumadores diarios por Comunidad Autónoma, se observan los siguientes hallazgos:
+  </p>
+  <ul>
+    <li><strong>Correlación débil:</strong> No se detecta una relación estadísticamente significativa entre criminalidad y fumadores diarios. Por ejemplo, Cataluña y Comunidad de Madrid tienen criminalidad alta pero tasas de fumadores relativamente bajas, mientras que Extremadura tiene criminalidad baja y una tasa de fumadores alta.</li>
+    <li><strong>Diferencias poblacionales:</strong> Comunidades grandes como Andalucía, Cataluña y Comunidad de Madrid muestran altos niveles de criminalidad absolutos, pero esto refleja principalmente su tamaño y densidad poblacional, no necesariamente un vínculo directo con los hábitos de fumado.</li>
+    <li><strong>Comunidades pequeñas:</strong> Ceuta, Melilla y La Rioja presentan tanto criminalidad baja como tasas de fumadores moderadas, reforzando que los números absolutos y el tamaño poblacional influyen más que la correlación entre las variables.</li>
+    <li><strong>Conclusión general:</strong> Los datos sugieren que la criminalidad y el porcentaje de fumadores diarios no están directamente relacionados. Cualquier política o intervención que busque reducir el consumo de tabaco no debería basarse en niveles de criminalidad, y viceversa.</li>
+  </ul>
+</div>
+
+## Ahora veremos la relacion de fumadores diarios pero por el parametro de crimnalidad
+
+```{r graf_param_fum}
+#  Limpiar nombres de comunidad
+datos_criminalidad_total <- datos_criminalidad_total %>%
+  mutate(comunidad = str_replace(comunidad, "^En\\s+", ""))
+
+#  Media de criminalidad por comunidad y parámetro
+criminalidad_parametro <- datos_criminalidad_total %>%
+  group_by(comunidad, Parámetro) %>%
+  summarise(
+    Criminalidad_media = mean(`Denuncias (Dato acumulados)`, na.rm = TRUE)
+  ) %>%
+  ungroup()
+
+#  Media de fumadores por comunidad
+fumadores_media <- tabla_fumadores %>%
+  filter(Comunidad != "Total Nacional") %>%
+  group_by(Comunidad) %>%
+  summarise(Fumadores_media = mean(Valor, na.rm = TRUE))
+
+#  Unir criminalidad y fumadores
+datos_union_parametro <- left_join(
+  criminalidad_parametro,
+  fumadores_media,
+  by = c("comunidad" = "Comunidad")
+)
+
+# Generar gráficos en un bucle y guardarlos en lista
+graficos <- lapply(parametros, function(p) {
+  datos_param <- datos_union_parametro %>%
+    filter(Parámetro == p)
+  
+  ggplot(datos_param, aes(x = Criminalidad_media, y = Fumadores_media)) +
+    geom_point(color = "darkred", size = 3) +
+    geom_smooth(method = "lm", color = "gold", se = TRUE) +
+    geom_text_repel(aes(label = comunidad), size = 3) +
+    labs(
+      x = paste(p, "(media denuncias)"),
+      y = "Fumadores diarios (%)",
+      title = paste("Relación entre", p, "y Fumadores diarios"),
+      subtitle = "Comparativa por Comunidades Autónomas"
+    ) +
+    theme_minimal(base_size = 14) +
+    theme(
+      plot.title = element_text(face = "bold", size = 16),
+      plot.subtitle = element_text(size = 12),
+      axis.title = element_text(face = "bold")
+    )
+})
+
+# Mostrar los gráficos uno a uno
+for (g in graficos) {
+  print(g)
+}
+
+#los parámetros son:
+#Secuestro,Robos con violencia e intimidación, Hurtos,Tráfico de drogas,Sustracciones de vehículos,Homicidios dolosos y asesinatos consumados
+
+```
+## Veamos los resultados en una tabla
+```{r tab_param_fum}
+# Crear tabla resumen por comunidad y parámetro
+tabla_resumen <- datos_union_parametro %>%
+  select(comunidad, Parámetro, Criminalidad_media, Fumadores_media) %>%
+  arrange(Parámetro, comunidad)
+
+# Mostrar tabla en HTML con kableExtra
+tabla_resumen %>%
+  kable("html", 
+        caption = "Relación entre Criminalidad media y Fumadores diarios por Comunidad y Tipo de Delito",
+        col.names = c("Comunidad", "Tipo de Delito", "Criminalidad media (denuncias)", "Fumadores diarios (%)")) %>%
+  kable_styling(
+    full_width = FALSE, 
+    bootstrap_options = c("striped", "hover", "condensed"),
+    position = "center"
+  ) %>%
+  row_spec(0, bold = TRUE, color = "white", background = "#2E86C1") 
+```
+<h2>Conclusión Estadística: Relación entre Criminalidad y Fumadores Diarios</h2>
+
+<p> <strong>Comparativa por Comunidad y Delito:</strong></p>
+<ul>
+<li>En general, no se observa una correlación consistente entre la criminalidad y el porcentaje de fumadores diarios. Comunidades con alta criminalidad, como Cataluña, Andalucía o Comunidad de Madrid, no muestran necesariamente un mayor porcentaje de fumadores.</li>
+<li>Las comunidades con menor criminalidad, como Melilla, Ceuta o La Rioja, presentan porcentajes de fumadores que no son los más bajos, lo que indica que la criminalidad y los hábitos de consumo de tabaco parecen comportarse de manera independiente.</li>
+<li>Para delitos concretos, como <em>Homicidios dolosos</em>, <em>Tráfico de drogas</em>, <em>Secuestros</em> y <em>Sustracciones de vehículos</em>, algunas comunidades muestran correlaciones ligeramente positivas con fumadores diarios, aunque estas no son generalizables a todas las regiones ni a todos los tipos de delito.</li>
+</ul>
+
+<p> <strong>Impacto de la Población:</strong></p>
+<ul>
+<li>Es importante considerar la población de cada comunidad al interpretar estos resultados. Comunidades grandes tienden a tener cifras absolutas más altas de criminalidad y fumadores, pero al comparar tasas relativas, la relación no se mantiene clara.</li>
+<li>La normalización por población permitiría obtener una visión más precisa de la proporción de delitos y fumadores por habitante, minimizando el efecto del tamaño de la comunidad.</li>
+</ul>
+
+<p> <strong>Conclusión General:</strong></p>
+<ul>
+<li>Tras analizar los datos por comunidad y tipo de delito, se concluye que no existe una relación estadísticamente significativa entre la criminalidad y la proporción de fumadores diarios. Cualquier asociación observada en ciertos delitos específicos es débil y no refleja un patrón generalizado.</li>
+<li>Por tanto, desde el punto de vista estadístico, las políticas de prevención de criminalidad y las estrategias de salud pública sobre consumo de tabaco deben considerarse de manera independiente.</li>
+</ul>
+
+<div class="biblio-container">
+<h2>Bibliografía</h2>
+
+<div class="biblio-item">
+<span>Criminalidad autonómica:</span><br>
+<a href="https://www.epdata.es/datos/crimen-espana-hoy-asesinatos-robos-secuestros-otros-delitos/4/espana/106">
+https://www.epdata.es/datos/crimen-espana-hoy-asesinatos-robos-secuestros-otros-delitos/4/espana/106
+</a>
+</div>
+
+<div class="biblio-item">
+<span>Ataques al corazón por comunidad autónoma (INE):</span><br>
+<a href="https://www.ine.es/jaxi/Datos.htm?tpx=46687#_tabs-tabla">
+https://www.ine.es/jaxi/Datos.htm?tpx=46687#_tabs-tabla
+</a>
+</div>
+
+<div class="biblio-item">
+<span>Densidad de fumadores por comunidad autónoma (INE):</span><br>
+<a href="https://www.ine.es/jaxiT3/Datos.htm?t=69667#_tabs-tabla">
+https://www.ine.es/jaxiT3/Datos.htm?t=69667#_tabs-tabla
+</a>
+</div>
+
+<div class="biblio-item">
+<span>Salud mental (INE):</span><br>
+<a href="https://www.ine.es/jaxi/Datos.htm?path=/t15/p419/a2011/p01/l0/&file=01056.px#_tabs-tabla">
+https://www.ine.es/jaxi/Datos.htm?path=/t15/p419/a2011/p01/l0/&file=01056.px#_tabs-tabla
+</a>
+</div>
+
+<div class="biblio-item">
+<span>Calidad del aire (MITECO):</span><br>
+<a href="https://www.miteco.gob.es/es/calidad-y-evaluacion-ambiental/temas/atmosfera-y-calidad-del-aire/evaluacion-y-datos-de-calidad-del-aire/datos.html">
+https://www.miteco.gob.es/es/calidad-y-evaluacion-ambiental/temas/atmosfera-y-calidad-del-aire/evaluacion-y-datos-de-calidad-del-aire/datos.html
+</a>
+</div>
+
+<div class="biblio-item">
+<span>Población por comunidad autónoma (INE):</span><br>
+<a href="https://www.ine.es/jaxiT3/Tabla.htm?t=2853">
+https://www.ine.es/jaxiT3/Tabla.htm?t=2853
+</a>
+</div>
+
+</div>

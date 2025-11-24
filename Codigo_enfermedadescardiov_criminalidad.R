@@ -1,0 +1,216 @@
+#############################
+# 0) CARGA DE PAQUETES
+#############################
+
+library(tidyverse)  # incluye dplyr, ggplot2, readr, tidyr, stringr
+library(ggrepel)    # para etiquetas en el gráfico
+
+#############################
+# 1) DATOS DE CRIMINALIDAD
+#############################
+
+ruta_criminalidad <- "INPUT/DATA/CRIMINALIDAD"
+
+archivos_crimen <- list.files(
+  path = ruta_criminalidad,
+  pattern = "\\.csv$",
+  full.names = TRUE
+)
+
+# Función para leer cada CSV y añadir columna "comunidad"
+procesar_csv <- function(f) {
+  df <- read_csv2(f)  # usa ";" como separador
+  comunidad <- f %>%
+    basename() %>%
+    str_remove("\\.csv$") %>%
+    str_to_lower() %>%
+    str_extract("(?<=en_).*") %>%
+    str_replace_all("_+", " ") %>%
+    str_replace_all("-", " ") %>%
+    str_squish() %>%
+    str_to_title()
+  
+  df$comunidad <- comunidad
+  return(df)
+}
+
+# Unimos todos los CSV de criminalidad
+datos_criminalidad_total <- bind_rows(lapply(archivos_crimen, procesar_csv))
+
+View(datos_criminalidad_total)
+
+
+#############################
+# 2) DATOS ENFERMEDADES CARDIOVASCULARES
+#############################
+
+carpeta_cardio <- "INPUT/DATA/Enfermedades_Cardiovasculares"
+
+archivos_cardio <- list.files(
+  carpeta_cardio,
+  pattern = "_UTF8\\.csv$",
+  full.names = TRUE
+)
+
+Enf_card <- read_delim(
+  archivos_cardio,
+  delim = ";",
+  id = "archivo",
+  trim_ws = TRUE,
+  show_col_types = FALSE
+)
+
+View(Enf_card)
+
+
+#############################
+# 3) CRIMEN ANUAL POR COMUNIDAD, AÑO Y TIPO
+#############################
+
+# Limpiar nombre de comunidad y quedarnos solo con años tipo "2023"
+criminalidad_limpia <- datos_criminalidad_total %>%
+  mutate(
+    comunidad = str_replace(comunidad, "^En\\s+", "")
+  ) %>%
+  filter(str_detect(Año, "^[0-9]{4}$"))
+
+# Sumar los 4 trimestres: comunidad + Año + Parámetro
+crimen_anual <- criminalidad_limpia %>%
+  group_by(comunidad, Año, Parámetro) %>%
+  summarise(
+    Denuncias_anuales = sum(`Denuncias (Dato acumulados)`, na.rm = TRUE)
+  )
+
+View(crimen_anual)
+
+
+#############################
+# 4) LIMPIEZA ENF_CARD Y UNIÓN CRIMEN + CARDIO
+#############################
+
+Enf_card2 <- Enf_card %>%
+  rename(Comunidad = `Comunidades y Ciudades Autónomas`) %>%
+  mutate(
+    Comunidad = str_remove(Comunidad, "^[0-9]{2} "),
+    Comunidad = case_when(
+      Comunidad == "Andalucía"                   ~ "Andalucia",
+      Comunidad == "Aragón"                      ~ "Aragon",
+      Comunidad == "Asturias, Principado de"     ~ "Principado De Asturias",
+      Comunidad == "Balears, Illes"              ~ "Islas Baleares",
+      Comunidad == "Canarias"                    ~ "Canarias",
+      Comunidad == "Cantabria"                   ~ "Cantabria",
+      Comunidad == "Castilla-La Mancha"          ~ "Castilla La Mancha",
+      Comunidad == "Castilla y León"             ~ "Castilla Y Leon",
+      Comunidad == "Cataluña"                    ~ "Cataluña",
+      Comunidad == "Ceuta"                       ~ "Ceuta",
+      Comunidad == "Comunitat Valenciana"        ~ "Comunidad Valenciana",
+      Comunidad == "Extremadura"                 ~ "Extremadura",
+      Comunidad == "Galicia"                     ~ "Galicia",
+      Comunidad == "Madrid, Comunidad de"        ~ "Comunidad De Madrid",
+      Comunidad == "Melilla"                     ~ "Melilla",
+      Comunidad == "Murcia, Región de"           ~ "Region De Murcia",
+      Comunidad == "Navarra, Comunidad Foral de" ~ "Comunidad Foral De Navarra",
+      Comunidad == "País Vasco"                  ~ "Pais Vasco",
+      Comunidad == "Rioja, La"                   ~ "La Rioja",
+      TRUE ~ Comunidad
+    ),
+    Año = as.character(Periodo)
+  )
+
+View(Enf_card2)
+
+# Unión de criminalidad anual + enfermedades cardiovasculares
+crimen_cardio <- left_join(
+  crimen_anual,
+  Enf_card2,
+  by = c("comunidad" = "Comunidad", "Año" = "Año")
+)
+
+View(crimen_cardio)
+
+# Versión sin NA en las dos variables clave
+crimen_cardio_limpio <- crimen_cardio %>%
+  filter(!is.na(Denuncias_anuales),
+         !is.na(Total))
+
+View(crimen_cardio_limpio)
+
+#############################
+# 5) PREGUNTA 1:
+# ¿QUÉ DELITOS SE RELACIONAN MÁS CON LAS ENF. CARDIOVASCULARES?
+#############################
+# RESPUESTA:
+# Los delitos con mayor relación (aunque negativa) con las enfermedades cardiovasculares son las sustracciones de vehículos, 
+# los robos con violencia e intimidación y los secuestros. Sin embargo, la relación no implica causalidad, Los resultados obtenidos 
+# muestran que todas las correlaciones son negativas y de magnitud débil, situándose entre –0.07 y –0.37. Esto indica que 
+# ningún tipo de delito presenta una relación clara o significativa con las enfermedades cardiovasculares, por lo que como conclusión sacamos 
+# que no hay relación entre la criminalidad y las enfermedades cardiovasculares.
+#############################
+
+corr_por_delito <- crimen_cardio_limpio %>%
+  group_by(Parámetro) %>%
+  summarise(
+    correlacion = cor(Denuncias_anuales, Total)
+  ) %>%
+  arrange(desc(correlacion))
+
+View(corr_por_delito)
+
+corr_por_delito_plot <- corr_por_delito %>%
+  arrange(desc(correlacion)) %>%
+  mutate(
+    Parámetro = factor(Parámetro, levels = Parámetro)
+  )
+
+ggplot(corr_por_delito_plot,
+       aes(x = Parámetro, y = correlacion)) +
+  geom_bar(stat = "identity", fill = "gold1", colour = "black") +
+  coord_flip() +
+  labs(
+    x = "Tipo de delito",
+    y = "Correlación crimen–cardio",
+    title = "Relación entre cada delito y las enfermedades cardiovasculares"
+  )
+
+
+#############################
+# 6) PREGUNTA 2:
+# ¿Qué comunidades muestran mayor relación entre criminalidad y enfermedades cardiovasculares?
+#############################
+# RESPUESTA:
+# El análisis del ratio crimen_total / enfermedades cardiovasculares muestra diferencias claras entre comunidades autónomas.
+# Cataluña, Comunidad de Madrid y Andalucía presentan los valores más altos, lo que indica que concentran una mayor cantidad de delitos
+# en relación con sus casos de enfermedades cardiovasculares. Sin embargo, esto no implica que exista una relación causal entre ambas variables,
+# sino que refleja sobre todo la cantidad de población que habita en estas grandes comunidades, sus densidades de población son de las más altas.
+# Por otro lado, comunidades como Ceuta, Melilla, La Rioja o Cantabria muestran ratios muy bajos, lo que significa que las enfermedades
+# cardiovasculares tienen un peso mucho mayor que la criminalidad en estas regiones.
+# En conclusión, aunque existen diferencias entre comunidades, el ratio no sugiere una relación directa entre criminalidad y enfermedades
+# cardiovasculares. Más bien refleja patrones poblacionales y estructurales propios de cada territorio, por lo que no podemos afirmar
+# que una mayor criminalidad implique un mayor nivel de enfermedades cardiovasculares.
+#############################
+
+ranking_comunidades <- crimen_cardio_limpio %>%
+  group_by(comunidad) %>%
+  summarise(
+    crimen_total     = sum(Denuncias_anuales),
+    enf_cardio_total = sum(Total)
+  ) %>%
+  mutate(
+    ratio = crimen_total / enf_cardio_total
+  ) %>%
+  arrange(desc(ratio))
+
+View(ranking_comunidades)
+
+ggplot(
+  data = ranking_comunidades,
+  aes(x = comunidad, y = ratio)
+) +
+  geom_bar(stat = "identity", fill = "blue", colour = "black") +
+  coord_flip()
+  labs(
+    x = "Comunidad Autónoma",
+    y = "Ratio crimen / enf. cardiovasculares",
+    title = "Ratio entre criminalidad y enfermedades cardiovasculares",
+    subtitle = "Crimen_total / Enf_cardio_total por comunidad"
+  )

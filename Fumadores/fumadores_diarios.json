@@ -1,0 +1,281 @@
+[{"COD":"ICV5039", "Nombre":"Fumador diario. Total Nacional. Dato base. 15 y más años. ", "T3_Unidad":"Porcentaje", "T3_Escala":" ", "MetaData":[{"Id":298884, "T3_Variable":"Indicadores de Calidad de Vida", "Nombre":"Fumador diario", "Codigo":""}
+,{"Id":16473, "T3_Variable":"Total Nacional", "Nombre":"Total Nacional", "Codigo":"00"}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":298059, "T3_Variable":"Edad de la población estudio", "Nombre":"15 y más años", "Codigo":"Y-GE15"}
+]
+, "Data":[{"Fecha":"2023-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2023, "Valor":16.6}
+,{"Fecha":"2022-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2022, "Valor":17.0}
+,{"Fecha":"2020-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2020, "Valor":19.8}
+,{"Fecha":"2017-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2017, "Valor":22.1}
+,{"Fecha":"2014-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2014, "Valor":23.0}
+,{"Fecha":"2012-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2012, "Valor":24.0}
+,{"Fecha":"2009-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2009, "Valor":26.2}
+]
+}
+,{"COD":"ICV5021", "Nombre":"Fumador diario. Andalucía. Dato base. 15 y más años. ", "T3_Unidad":"Porcentaje", "T3_Escala":" ", "MetaData":[{"Id":298884, "T3_Variable":"Indicadores de Calidad de Vida", "Nombre":"Fumador diario", "Codigo":""}
+,{"Id":8997, "T3_Variable":"Comunidades y Ciudades Autónomas", "Nombre":"Andalucía", "Codigo":"01"}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":298059, "T3_Variable":"Edad de la población estudio", "Nombre":"15 y más años", "Codigo":"Y-GE15"}
+]
+, "Data":[{"Fecha":"2023-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2023, "Valor":18.2}
+,{"Fecha":"2022-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2022, "Valor":18.7}
+,{"Fecha":"2020-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2020, "Valor":20.9}
+,{"Fecha":"2017-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2017, "Valor":22.7}
+,{"Fecha":"2014-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2014, "Valor":24.4}
+,{"Fecha":"2012-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2012, "Valor":27.1}
+,{"Fecha":"2009-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2009, "Valor":26.7}
+]
+}
+,{"COD":"ICV5022", "Nombre":"Fumador diario. Aragón. Dato base. 15 y más años. ", "T3_Unidad":"Porcentaje", "T3_Escala":" ", "MetaData":[{"Id":298884, "T3_Variable":"Indicadores de Calidad de Vida", "Nombre":"Fumador diario", "Codigo":""}
+,{"Id":8998, "T3_Variable":"Comunidades y Ciudades Autónomas", "Nombre":"Aragón", "Codigo":"02"}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":298059, "T3_Variable":"Edad de la población estudio", "Nombre":"15 y más años", "Codigo":"Y-GE15"}
+]
+, "Data":[{"Fecha":"2023-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2023, "Valor":15.5}
+,{"Fecha":"2022-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2022, "Valor":16.1}
+,{"Fecha":"2020-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2020, "Valor":17.8}
+,{"Fecha":"2017-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2017, "Valor":24.1}
+,{"Fecha":"2014-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2014, "Valor":23.9}
+,{"Fecha":"2012-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2012, "Valor":25.9}
+,{"Fecha":"2009-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2009, "Valor":24.8}
+]
+}
+,{"COD":"ICV5023", "Nombre":"Fumador diario. Asturias, Principado de. Dato base. 15 y más años. ", "T3_Unidad":"Porcentaje", "T3_Escala":" ", "MetaData":[{"Id":298884, "T3_Variable":"Indicadores de Calidad de Vida", "Nombre":"Fumador diario", "Codigo":""}
+,{"Id":8999, "T3_Variable":"Comunidades y Ciudades Autónomas", "Nombre":"Asturias, Principado de", "Codigo":"03"}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":298059, "T3_Variable":"Edad de la población estudio", "Nombre":"15 y más años", "Codigo":"Y-GE15"}
+]
+, "Data":[{"Fecha":"2023-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2023, "Valor":12.5}
+,{"Fecha":"2022-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2022, "Valor":17.3}
+,{"Fecha":"2020-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2020, "Valor":19.2}
+,{"Fecha":"2017-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2017, "Valor":23.8}
+,{"Fecha":"2014-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2014, "Valor":19.1}
+,{"Fecha":"2012-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2012, "Valor":21.8}
+,{"Fecha":"2009-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2009, "Valor":27.2}
+]
+}
+,{"COD":"ICV5024", "Nombre":"Fumador diario. Balears, Illes. Dato base. 15 y más años. ", "T3_Unidad":"Porcentaje", "T3_Escala":" ", "MetaData":[{"Id":298884, "T3_Variable":"Indicadores de Calidad de Vida", "Nombre":"Fumador diario", "Codigo":""}
+,{"Id":9000, "T3_Variable":"Comunidades y Ciudades Autónomas", "Nombre":"Balears, Illes", "Codigo":"04"}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":298059, "T3_Variable":"Edad de la población estudio", "Nombre":"15 y más años", "Codigo":"Y-GE15"}
+]
+, "Data":[{"Fecha":"2023-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2023, "Valor":20.9}
+,{"Fecha":"2022-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2022, "Valor":17.2}
+,{"Fecha":"2020-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2020, "Valor":20.5}
+,{"Fecha":"2017-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2017, "Valor":23.1}
+,{"Fecha":"2014-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2014, "Valor":23.0}
+,{"Fecha":"2012-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2012, "Valor":22.7}
+,{"Fecha":"2009-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2009, "Valor":25.7}
+]
+}
+,{"COD":"ICV5025", "Nombre":"Fumador diario. Canarias. Dato base. 15 y más años. ", "T3_Unidad":"Porcentaje", "T3_Escala":" ", "MetaData":[{"Id":298884, "T3_Variable":"Indicadores de Calidad de Vida", "Nombre":"Fumador diario", "Codigo":""}
+,{"Id":9001, "T3_Variable":"Comunidades y Ciudades Autónomas", "Nombre":"Canarias", "Codigo":"05"}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":298059, "T3_Variable":"Edad de la población estudio", "Nombre":"15 y más años", "Codigo":"Y-GE15"}
+]
+, "Data":[{"Fecha":"2023-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2023, "Valor":16.1}
+,{"Fecha":"2022-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2022, "Valor":16.9}
+,{"Fecha":"2020-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2020, "Valor":20.7}
+,{"Fecha":"2017-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2017, "Valor":22.3}
+,{"Fecha":"2014-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2014, "Valor":22.7}
+,{"Fecha":"2012-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2012, "Valor":21.9}
+,{"Fecha":"2009-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2009, "Valor":27.2}
+]
+}
+,{"COD":"ICV5026", "Nombre":"Fumador diario. Cantabria. Dato base. 15 y más años. ", "T3_Unidad":"Porcentaje", "T3_Escala":" ", "MetaData":[{"Id":298884, "T3_Variable":"Indicadores de Calidad de Vida", "Nombre":"Fumador diario", "Codigo":""}
+,{"Id":9002, "T3_Variable":"Comunidades y Ciudades Autónomas", "Nombre":"Cantabria", "Codigo":"06"}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":298059, "T3_Variable":"Edad de la población estudio", "Nombre":"15 y más años", "Codigo":"Y-GE15"}
+]
+, "Data":[{"Fecha":"2023-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2023, "Valor":9.9}
+,{"Fecha":"2022-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2022, "Valor":17.6}
+,{"Fecha":"2020-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2020, "Valor":18.9}
+,{"Fecha":"2017-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2017, "Valor":22.9}
+,{"Fecha":"2014-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2014, "Valor":21.4}
+,{"Fecha":"2012-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2012, "Valor":23.9}
+,{"Fecha":"2009-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2009, "Valor":27.6}
+]
+}
+,{"COD":"ICV5027", "Nombre":"Fumador diario. Castilla y León. Dato base. 15 y más años. ", "T3_Unidad":"Porcentaje", "T3_Escala":" ", "MetaData":[{"Id":298884, "T3_Variable":"Indicadores de Calidad de Vida", "Nombre":"Fumador diario", "Codigo":""}
+,{"Id":9003, "T3_Variable":"Comunidades y Ciudades Autónomas", "Nombre":"Castilla y León", "Codigo":"07"}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":298059, "T3_Variable":"Edad de la población estudio", "Nombre":"15 y más años", "Codigo":"Y-GE15"}
+]
+, "Data":[{"Fecha":"2023-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2023, "Valor":19.0}
+,{"Fecha":"2022-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2022, "Valor":18.2}
+,{"Fecha":"2020-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2020, "Valor":19.0}
+,{"Fecha":"2017-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2017, "Valor":22.7}
+,{"Fecha":"2014-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2014, "Valor":21.6}
+,{"Fecha":"2012-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2012, "Valor":22.8}
+,{"Fecha":"2009-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2009, "Valor":28.4}
+]
+}
+,{"COD":"ICV5028", "Nombre":"Fumador diario. Castilla - La Mancha. Dato base. 15 y más años. ", "T3_Unidad":"Porcentaje", "T3_Escala":" ", "MetaData":[{"Id":298884, "T3_Variable":"Indicadores de Calidad de Vida", "Nombre":"Fumador diario", "Codigo":""}
+,{"Id":9004, "T3_Variable":"Comunidades y Ciudades Autónomas", "Nombre":"Castilla - La Mancha", "Codigo":"08"}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":298059, "T3_Variable":"Edad de la población estudio", "Nombre":"15 y más años", "Codigo":"Y-GE15"}
+]
+, "Data":[{"Fecha":"2023-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2023, "Valor":19.4}
+,{"Fecha":"2022-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2022, "Valor":18.5}
+,{"Fecha":"2020-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2020, "Valor":20.6}
+,{"Fecha":"2017-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2017, "Valor":24.6}
+,{"Fecha":"2014-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2014, "Valor":23.4}
+,{"Fecha":"2012-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2012, "Valor":24.5}
+,{"Fecha":"2009-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2009, "Valor":29.0}
+]
+}
+,{"COD":"ICV5029", "Nombre":"Fumador diario. Cataluña. Dato base. 15 y más años. ", "T3_Unidad":"Porcentaje", "T3_Escala":" ", "MetaData":[{"Id":298884, "T3_Variable":"Indicadores de Calidad de Vida", "Nombre":"Fumador diario", "Codigo":""}
+,{"Id":9005, "T3_Variable":"Comunidades y Ciudades Autónomas", "Nombre":"Cataluña", "Codigo":"09"}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":298059, "T3_Variable":"Edad de la población estudio", "Nombre":"15 y más años", "Codigo":"Y-GE15"}
+]
+, "Data":[{"Fecha":"2023-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2023, "Valor":13.8}
+,{"Fecha":"2022-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2022, "Valor":18.1}
+,{"Fecha":"2020-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2020, "Valor":20.9}
+,{"Fecha":"2017-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2017, "Valor":22.5}
+,{"Fecha":"2014-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2014, "Valor":23.7}
+,{"Fecha":"2012-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2012, "Valor":23.0}
+,{"Fecha":"2009-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2009, "Valor":24.2}
+]
+}
+,{"COD":"ICV5030", "Nombre":"Fumador diario. Comunitat Valenciana. Dato base. 15 y más años. ", "T3_Unidad":"Porcentaje", "T3_Escala":" ", "MetaData":[{"Id":298884, "T3_Variable":"Indicadores de Calidad de Vida", "Nombre":"Fumador diario", "Codigo":""}
+,{"Id":9006, "T3_Variable":"Comunidades y Ciudades Autónomas", "Nombre":"Comunitat Valenciana", "Codigo":"10"}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":298059, "T3_Variable":"Edad de la población estudio", "Nombre":"15 y más años", "Codigo":"Y-GE15"}
+]
+, "Data":[{"Fecha":"2023-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2023, "Valor":21.2}
+,{"Fecha":"2022-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2022, "Valor":16.2}
+,{"Fecha":"2020-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2020, "Valor":19.9}
+,{"Fecha":"2017-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2017, "Valor":24.8}
+,{"Fecha":"2014-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2014, "Valor":22.0}
+,{"Fecha":"2012-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2012, "Valor":27.6}
+,{"Fecha":"2009-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2009, "Valor":28.2}
+]
+}
+,{"COD":"ICV5031", "Nombre":"Fumador diario. Extremadura. Dato base. 15 y más años. ", "T3_Unidad":"Porcentaje", "T3_Escala":" ", "MetaData":[{"Id":298884, "T3_Variable":"Indicadores de Calidad de Vida", "Nombre":"Fumador diario", "Codigo":""}
+,{"Id":9007, "T3_Variable":"Comunidades y Ciudades Autónomas", "Nombre":"Extremadura", "Codigo":"11"}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":298059, "T3_Variable":"Edad de la población estudio", "Nombre":"15 y más años", "Codigo":"Y-GE15"}
+]
+, "Data":[{"Fecha":"2023-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2023, "Valor":21.5}
+,{"Fecha":"2022-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2022, "Valor":20.3}
+,{"Fecha":"2020-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2020, "Valor":25.3}
+,{"Fecha":"2017-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2017, "Valor":23.9}
+,{"Fecha":"2014-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2014, "Valor":25.6}
+,{"Fecha":"2012-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2012, "Valor":24.7}
+,{"Fecha":"2009-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2009, "Valor":26.3}
+]
+}
+,{"COD":"ICV5032", "Nombre":"Fumador diario. Galicia. Dato base. 15 y más años. ", "T3_Unidad":"Porcentaje", "T3_Escala":" ", "MetaData":[{"Id":298884, "T3_Variable":"Indicadores de Calidad de Vida", "Nombre":"Fumador diario", "Codigo":""}
+,{"Id":9008, "T3_Variable":"Comunidades y Ciudades Autónomas", "Nombre":"Galicia", "Codigo":"12"}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":298059, "T3_Variable":"Edad de la población estudio", "Nombre":"15 y más años", "Codigo":"Y-GE15"}
+]
+, "Data":[{"Fecha":"2023-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2023, "Valor":14.9}
+,{"Fecha":"2022-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2022, "Valor":15.0}
+,{"Fecha":"2020-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2020, "Valor":17.7}
+,{"Fecha":"2017-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2017, "Valor":17.8}
+,{"Fecha":"2014-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2014, "Valor":19.1}
+,{"Fecha":"2012-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2012, "Valor":20.3}
+,{"Fecha":"2009-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2009, "Valor":22.2}
+]
+}
+,{"COD":"ICV5033", "Nombre":"Fumador diario. Madrid, Comunidad de. Dato base. 15 y más años. ", "T3_Unidad":"Porcentaje", "T3_Escala":" ", "MetaData":[{"Id":298884, "T3_Variable":"Indicadores de Calidad de Vida", "Nombre":"Fumador diario", "Codigo":""}
+,{"Id":9009, "T3_Variable":"Comunidades y Ciudades Autónomas", "Nombre":"Madrid, Comunidad de", "Codigo":"13"}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":298059, "T3_Variable":"Edad de la población estudio", "Nombre":"15 y más años", "Codigo":"Y-GE15"}
+]
+, "Data":[{"Fecha":"2023-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2023, "Valor":13.3}
+,{"Fecha":"2022-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2022, "Valor":15.1}
+,{"Fecha":"2020-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2020, "Valor":17.7}
+,{"Fecha":"2017-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2017, "Valor":19.0}
+,{"Fecha":"2014-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2014, "Valor":23.2}
+,{"Fecha":"2012-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2012, "Valor":20.9}
+,{"Fecha":"2009-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2009, "Valor":25.1}
+]
+}
+,{"COD":"ICV5034", "Nombre":"Fumador diario. Murcia, Región de. Dato base. 15 y más años. ", "T3_Unidad":"Porcentaje", "T3_Escala":" ", "MetaData":[{"Id":298884, "T3_Variable":"Indicadores de Calidad de Vida", "Nombre":"Fumador diario", "Codigo":""}
+,{"Id":9010, "T3_Variable":"Comunidades y Ciudades Autónomas", "Nombre":"Murcia, Región de", "Codigo":"14"}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":298059, "T3_Variable":"Edad de la población estudio", "Nombre":"15 y más años", "Codigo":"Y-GE15"}
+]
+, "Data":[{"Fecha":"2023-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2023, "Valor":19.7}
+,{"Fecha":"2022-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2022, "Valor":16.8}
+,{"Fecha":"2020-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2020, "Valor":23.7}
+,{"Fecha":"2017-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2017, "Valor":23.3}
+,{"Fecha":"2014-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2014, "Valor":25.6}
+,{"Fecha":"2012-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2012, "Valor":25.0}
+,{"Fecha":"2009-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2009, "Valor":26.7}
+]
+}
+,{"COD":"ICV5035", "Nombre":"Fumador diario. Navarra, Comunidad Foral de. Dato base. 15 y más años. ", "T3_Unidad":"Porcentaje", "T3_Escala":" ", "MetaData":[{"Id":298884, "T3_Variable":"Indicadores de Calidad de Vida", "Nombre":"Fumador diario", "Codigo":""}
+,{"Id":9011, "T3_Variable":"Comunidades y Ciudades Autónomas", "Nombre":"Navarra, Comunidad Foral de", "Codigo":"15"}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":298059, "T3_Variable":"Edad de la población estudio", "Nombre":"15 y más años", "Codigo":"Y-GE15"}
+]
+, "Data":[{"Fecha":"2023-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2023, "Valor":17.6}
+,{"Fecha":"2022-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2022, "Valor":14.7}
+,{"Fecha":"2020-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2020, "Valor":18.2}
+,{"Fecha":"2017-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2017, "Valor":20.4}
+,{"Fecha":"2014-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2014, "Valor":23.2}
+,{"Fecha":"2012-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2012, "Valor":23.3}
+,{"Fecha":"2009-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2009, "Valor":28.3}
+]
+}
+,{"COD":"ICV5036", "Nombre":"Fumador diario. País Vasco. Dato base. 15 y más años. ", "T3_Unidad":"Porcentaje", "T3_Escala":" ", "MetaData":[{"Id":298884, "T3_Variable":"Indicadores de Calidad de Vida", "Nombre":"Fumador diario", "Codigo":""}
+,{"Id":9012, "T3_Variable":"Comunidades y Ciudades Autónomas", "Nombre":"País Vasco", "Codigo":"16"}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":298059, "T3_Variable":"Edad de la población estudio", "Nombre":"15 y más años", "Codigo":"Y-GE15"}
+]
+, "Data":[{"Fecha":"2023-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2023, "Valor":15.6}
+,{"Fecha":"2022-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2022, "Valor":13.8}
+,{"Fecha":"2020-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2020, "Valor":16.1}
+,{"Fecha":"2017-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2017, "Valor":19.8}
+,{"Fecha":"2014-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2014, "Valor":22.8}
+,{"Fecha":"2012-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2012, "Valor":23.3}
+,{"Fecha":"2009-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2009, "Valor":27.2}
+]
+}
+,{"COD":"ICV5037", "Nombre":"Fumador diario. Rioja, La. Dato base. 15 y más años. ", "T3_Unidad":"Porcentaje", "T3_Escala":" ", "MetaData":[{"Id":298884, "T3_Variable":"Indicadores de Calidad de Vida", "Nombre":"Fumador diario", "Codigo":""}
+,{"Id":9013, "T3_Variable":"Comunidades y Ciudades Autónomas", "Nombre":"Rioja, La", "Codigo":"17"}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":298059, "T3_Variable":"Edad de la población estudio", "Nombre":"15 y más años", "Codigo":"Y-GE15"}
+]
+, "Data":[{"Fecha":"2023-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2023, "Valor":16.6}
+,{"Fecha":"2022-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2022, "Valor":18.1}
+,{"Fecha":"2020-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2020, "Valor":18.7}
+,{"Fecha":"2017-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2017, "Valor":20.1}
+,{"Fecha":"2014-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2014, "Valor":21.8}
+,{"Fecha":"2012-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2012, "Valor":24.4}
+,{"Fecha":"2009-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2009, "Valor":29.4}
+]
+}
+,{"COD":"ICV5038", "Nombre":"Fumador diario. Ceuta. Dato base. 15 y más años. ", "T3_Unidad":"Porcentaje", "T3_Escala":" ", "MetaData":[{"Id":298884, "T3_Variable":"Indicadores de Calidad de Vida", "Nombre":"Fumador diario", "Codigo":""}
+,{"Id":9015, "T3_Variable":"Comunidades y Ciudades Autónomas", "Nombre":"Ceuta", "Codigo":"18"}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":298059, "T3_Variable":"Edad de la población estudio", "Nombre":"15 y más años", "Codigo":"Y-GE15"}
+]
+, "Data":[{"Fecha":"2023-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2023, "Valor":9.9}
+,{"Fecha":"2022-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2022, "Valor":17.3}
+,{"Fecha":"2020-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2020, "Valor":20.1}
+,{"Fecha":"2017-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2017, "Valor":24.3}
+,{"Fecha":"2014-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2014, "Valor":22.8}
+,{"Fecha":"2012-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2012, "Valor":18.7}
+,{"Fecha":"2009-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2009, "Valor":24.8}
+]
+}
+,{"COD":"ICV5020", "Nombre":"Fumador diario. Melilla. Dato base. 15 y más años. ", "T3_Unidad":"Porcentaje", "T3_Escala":" ", "MetaData":[{"Id":298884, "T3_Variable":"Indicadores de Calidad de Vida", "Nombre":"Fumador diario", "Codigo":""}
+,{"Id":8995, "T3_Variable":"Comunidades y Ciudades Autónomas", "Nombre":"Melilla", "Codigo":"19"}
+,{"Id":72, "T3_Variable":"Tipo de dato", "Nombre":"Dato base", "Codigo":""}
+,{"Id":298059, "T3_Variable":"Edad de la población estudio", "Nombre":"15 y más años", "Codigo":"Y-GE15"}
+]
+, "Data":[{"Fecha":"2023-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2023, "Valor":11.2}
+,{"Fecha":"2022-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2022, "Valor":12.3}
+,{"Fecha":"2020-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2020, "Valor":15.2}
+,{"Fecha":"2017-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2017, "Valor":19.5}
+,{"Fecha":"2014-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2014, "Valor":15.3}
+,{"Fecha":"2012-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2012, "Valor":19.0}
+,{"Fecha":"2009-01-01T00:00:00.000+01:00", "T3_TipoDato":"Definitivo", "T3_Periodo":"A", "Anyo":2009, "Valor":18.8}
+]
+}
+]
