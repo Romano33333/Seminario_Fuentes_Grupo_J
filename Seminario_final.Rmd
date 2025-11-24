@@ -1009,7 +1009,7 @@ ggplot(ranking_comunidades_tasa, aes(x = reorder(comunidad, ratio), y = ratio)) 
   )
 ```
 <div class="conclusion-box">
-  <h4>2️⃣ Comparación entre comunidades autónomas</h4>
+  <h4> Comparación entre comunidades autónomas</h4>
   <p>
     Analizando el <strong>ratio entre la tasa de criminalidad y la tasa de enfermedades cardiovasculares</strong> por     comunidad:
   </p>
@@ -1019,7 +1019,7 @@ ggplot(ranking_comunidades_tasa, aes(x = reorder(comunidad, ratio), y = ratio)) 
     <li>Esto confirma que las diferencias observadas reflejan patrones poblacionales y estructurales, y <strong>no            implican que la criminalidad provoque enfermedades cardiovasculares</strong>.</li>
   </ul>
 
-  <h4>🔹 Conclusión Final</h4>
+  <h4> Conclusión Final</h4>
   <p>
     Normalizar los datos por población es fundamental para comparar de forma justa entre comunidades. Aunque algunos      delitos muestran correlaciones positivas con enfermedades cardiovasculares, estas relaciones son débiles y no se      puede establecer causalidad. Las diferencias entre comunidades reflejan principalmente la densidad y tamaño           poblacional, por lo que <strong>no hay evidencia de que una mayor criminalidad implique un mayor nivel de             enfermedades cardiovasculares</strong>.
   </p>
