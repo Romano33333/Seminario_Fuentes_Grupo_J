@@ -2,7 +2,7 @@
 #datos que aparecerán en la cabecera del html
 title: "Análisis Integral: Criminalidad, Salud Mental y Hábitos de Fumado en España"
 subtitle: "Un estudio correlacional por Comunidades Autónomas"
-author: "Pablo Romano Aragón y David Temiño"
+author: "Pablo Romano Aragón y David Temiño Macaya"
 date: "`r Sys.Date()`"
 output: 
   html_document: #vamos a generar un html con el boton knit
