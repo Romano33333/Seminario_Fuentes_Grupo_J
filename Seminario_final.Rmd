@@ -18,6 +18,30 @@ output:
     fig_width: 12 #las figuras tendrán siempre estas dimensiones
     fig_height: 8
     css: "styles.css" #indica un archivo css,lenguaje de estilos que define la apariencia visual de los documentos web, como su color, fuentes y disposición
+references:
+  - id: criminalidad
+    title: "Criminalidad autonómica"
+    URL: "https://www.epdata.es/datos/crimen-espana-hoy-asesinatos-robos-secuestros-otros-delitos/4/espana/106"
+
+  - id: ataques_corazon
+    title: "Ataques al corazón por comunidad autónoma (INE)"
+    URL: "https://www.ine.es/jaxi/Datos.htm?tpx=46687#_tabs-tabla"
+
+  - id: fumadores
+    title: "Densidad de fumadores por comunidad autónoma (INE)"
+    URL: "https://www.ine.es/jaxiT3/Datos.htm?t=69667#_tabs-tabla"
+
+  - id: salud_mental
+    title: "Datos de salud mental (INE)"
+    URL: "https://www.ine.es/jaxi/Datos.htm?path=/t15/p419/a2011/p01/l0/&file=01056.px#_tabs-tabla"
+
+  - id: calidad_aire
+    title: "Calidad del aire en España"
+    URL: "https://www.miteco.gob.es/es/calidad-y-evaluacion-ambiental/temas/atmosfera-y-calidad-del-aire/evaluacion-y     -datos-de-calidad-del-aire/datos.html"
+
+  - id: poblacion
+    title: "Población por comunidad autónoma (INE)"
+    URL: "https://www.ine.es/jaxiT3/Tabla.htm?t=2853"
 ---
 ```{css, echo=FALSE}
 /* Estilos CSS personalizados para un diseño propio,no es necesario un archivo externo css */
@@ -125,6 +149,34 @@ pre {/*formato de los códigos mostrados*/
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);/*sombras*/
   border-radius: 10px;/*bordes redondeados*/
   overflow: hidden;/*es para que las esquinas se borden bien*/
+}
+.biblio-container {
+  background: #f8f9fa;
+  padding: 25px;
+  border-radius: 12px;
+  border-left: 6px solid #4a90e2;
+  font-family: "Segoe UI", Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+.biblio-container h2 {
+  margin-top: 0;
+  font-size: 28px;
+  color: #2c3e50;
+}
+.biblio-item {
+  margin-bottom: 12px;
+}
+.biblio-item span {
+  font-weight: 600;
+  color: #34495e;
+}
+.biblio-item a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+.biblio-item a:hover {
+  text-decoration: underline;
 }
 ```
 ```{r setup, include=FALSE}
@@ -1192,3 +1244,50 @@ tabla_resumen %>%
 <li>Tras analizar los datos por comunidad y tipo de delito, se concluye que no existe una relación estadísticamente significativa entre la criminalidad y la proporción de fumadores diarios. Cualquier asociación observada en ciertos delitos específicos es débil y no refleja un patrón generalizado.</li>
 <li>Por tanto, desde el punto de vista estadístico, las políticas de prevención de criminalidad y las estrategias de salud pública sobre consumo de tabaco deben considerarse de manera independiente.</li>
 </ul>
+
+<div class="biblio-container">
+<h2>Bibliografía</h2>
+
+<div class="biblio-item">
+<span>Criminalidad autonómica:</span><br>
+<a href="https://www.epdata.es/datos/crimen-espana-hoy-asesinatos-robos-secuestros-otros-delitos/4/espana/106">
+https://www.epdata.es/datos/crimen-espana-hoy-asesinatos-robos-secuestros-otros-delitos/4/espana/106
+</a>
+</div>
+
+<div class="biblio-item">
+<span>Ataques al corazón por comunidad autónoma (INE):</span><br>
+<a href="https://www.ine.es/jaxi/Datos.htm?tpx=46687#_tabs-tabla">
+https://www.ine.es/jaxi/Datos.htm?tpx=46687#_tabs-tabla
+</a>
+</div>
+
+<div class="biblio-item">
+<span>Densidad de fumadores por comunidad autónoma (INE):</span><br>
+<a href="https://www.ine.es/jaxiT3/Datos.htm?t=69667#_tabs-tabla">
+https://www.ine.es/jaxiT3/Datos.htm?t=69667#_tabs-tabla
+</a>
+</div>
+
+<div class="biblio-item">
+<span>Salud mental (INE):</span><br>
+<a href="https://www.ine.es/jaxi/Datos.htm?path=/t15/p419/a2011/p01/l0/&file=01056.px#_tabs-tabla">
+https://www.ine.es/jaxi/Datos.htm?path=/t15/p419/a2011/p01/l0/&file=01056.px#_tabs-tabla
+</a>
+</div>
+
+<div class="biblio-item">
+<span>Calidad del aire (MITECO):</span><br>
+<a href="https://www.miteco.gob.es/es/calidad-y-evaluacion-ambiental/temas/atmosfera-y-calidad-del-aire/evaluacion-y-datos-de-calidad-del-aire/datos.html">
+https://www.miteco.gob.es/es/calidad-y-evaluacion-ambiental/temas/atmosfera-y-calidad-del-aire/evaluacion-y-datos-de-calidad-del-aire/datos.html
+</a>
+</div>
+
+<div class="biblio-item">
+<span>Población por comunidad autónoma (INE):</span><br>
+<a href="https://www.ine.es/jaxiT3/Tabla.htm?t=2853">
+https://www.ine.es/jaxiT3/Tabla.htm?t=2853
+</a>
+</div>
+
+</div>
