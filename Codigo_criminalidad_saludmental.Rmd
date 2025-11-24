@@ -2,7 +2,7 @@
 title: "Codigo_criminalidad_saludmental"
 output: html_document
 ---
-```{r}
+```{r,message=FALSE,warning=FALSE}
 library(readr)
 library(dplyr)
 
@@ -89,7 +89,7 @@ salud_resumen <- salud_mental2 %>%
   mutate(
     SaludMental = parse_number(SaludMental)  # convertimos los datos de salud mental a números para poder trabajar con ellos
   )
-
+view(salud)
 
 # Resumen de crimen por comunidad
 
@@ -185,7 +185,7 @@ ggplot(data = datos_hombres,
 ```
 
 ```{r, message=FALSE, warning=FALSE}
-install.packages("kableExtra")
+#install.packages("kableExtra")
 library(jsonlite)
 library(tidyverse)
 library(dplyr)
@@ -314,7 +314,7 @@ fumadores_filtrado <- tabla_fumadores %>%
 # Unir ambas tablas
 datos_union <- left_join(criminalidad_media, fumadores_filtrado, 
                          by = c("comunidad" = "Comunidad"))
-# 4️⃣ Gráfico: Criminalidad vs Fumadores diarios
+# Gráfico: Criminalidad vs Fumadores diarios
 ggplot(datos_union, aes(x = Criminalidad_media, y = Fumadores_media)) +
   geom_point(color = "firebrick", size = 3) +
   geom_smooth(method = "lm", color = "gold", se = TRUE) +

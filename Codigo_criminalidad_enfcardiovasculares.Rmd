@@ -130,8 +130,7 @@ crimen_cardio <- left_join(
   Enf_card2,
   by = c("comunidad" = "Comunidad", "Año" = "Año")
 )
-
-View(crimen_cardio)
+view(crimen_cardio)
 
 # Versión sin NA en las dos variables clave
 crimen_cardio_limpio <- crimen_cardio %>%
@@ -212,7 +211,7 @@ ggplot(
   aes(x = comunidad, y = ratio)
 ) +
   geom_bar(stat = "identity", fill = "blue", colour = "black") +
-  coord_flip()
+  coord_flip()+
   labs(
     x = "Comunidad Autónoma",
     y = "Ratio crimen / enf. cardiovasculares",
