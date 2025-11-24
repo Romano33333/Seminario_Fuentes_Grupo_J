@@ -263,7 +263,7 @@ knitr::kable(head(salud_mental, 6), caption = "Tabla visual: Salud Mental")#sele
 Explicación: read_delim() con id = "archivo" añade una columna indicando el fichero de origen .
 
 <!-- ====================================================================== -->
-# Limpieza del data frame — Salud Mental
+## Limpieza del data frame — Salud Mental
 
 Homogeneizamos los nombres de las comunidades y extraemos el resumen
 (media por comunidad y sexo que utilizaremos).
@@ -637,7 +637,7 @@ ggplot(data = datos_hombres,
   )
 ```
 <div class="highlight-box">
-  <h2>📊 Análisis de Correlación: Salud Mental y Criminalidad</h2>
+  <h2> Análisis de Correlación: Salud Mental y Criminalidad</h2>
   
   <p><strong>Observaciones principales:</strong></p>
   <ul>
@@ -688,15 +688,15 @@ poblacion_comunidades <- data.frame(
 
 # Unimos población a los datos de salud mental/criminalidad
 tabla_tasas <- datos_resumen %>%
-  left_join(poblacion_comunidades, by = c("Comunidad" = "Comunidad")) %>%
+  left_join(poblacion_comunidades, by = c("comunidad" = "Comunidad")) %>%
   mutate(
     Tasa_SaludMental = SaludMental / Poblacion * 1e5,
     Tasa_Criminalidad = Criminalidad / Poblacion * 1e5
   ) %>%
-  select(Sexo, Comunidad, SaludMental, Criminalidad, Poblacion,
+  select(Sexo, comunidad, SaludMental, Criminalidad, Poblacion,
          Tasa_SaludMental, Tasa_Criminalidad)
 
-# Crear tabla bonita en HTML
+  # Crear tabla bonita en HTML
 tabla_tasas %>%
   kable("html", caption = "Tasas de Salud Mental y Criminalidad por 100.000 habitantes") %>%
   kable_styling(full_width = FALSE, bootstrap_options = c("striped", "hover", "condensed")) %>%
@@ -710,12 +710,12 @@ tabla_tasas %>%
 # Crear abreviaturas de comunidades largas
 tabla_tasas <- tabla_tasas %>%
   mutate(Comunidad_abrev = case_when(
-    str_detect(Comunidad, regex("Principado De Asturias", ignore_case = TRUE)) ~ "Asturias",
-    str_detect(Comunidad, regex("Región De Murcia", ignore_case = TRUE)) ~ "Murcia",
-    str_detect(Comunidad, regex("Comunidad De Madrid", ignore_case = TRUE)) ~ "Madrid",
-    str_detect(Comunidad, regex("Comunidad Foral De Navarra", ignore_case = TRUE)) ~ "Navarra",
-    str_detect(Comunidad, regex("Islas Baleares", ignore_case = TRUE)) ~ "Baleares",
-    TRUE ~ Comunidad
+    str_detect(comunidad, regex("Principado De Asturias", ignore_case = TRUE)) ~ "Asturias",
+    str_detect(comunidad, regex("Región De Murcia", ignore_case = TRUE)) ~ "Murcia",
+    str_detect(comunidad, regex("Comunidad De Madrid", ignore_case = TRUE)) ~ "Madrid",
+    str_detect(comunidad, regex("Comunidad Foral De Navarra", ignore_case = TRUE)) ~ "Navarra",
+    str_detect(comunidad, regex("Islas Baleares", ignore_case = TRUE)) ~ "Baleares",
+    TRUE ~ comunidad
   ))
 ggplot(tabla_tasas, aes(x = Tasa_SaludMental, y = Tasa_Criminalidad, color = Sexo, label = Comunidad_abrev)) +
   geom_point(size = 4, alpha = 0.8) +
@@ -749,9 +749,9 @@ ggplot(tabla_tasas, aes(x = Tasa_SaludMental, y = Tasa_Criminalidad, color = Sex
   </ul>
 </div>
 
-#Análisis integral: Criminalidad y enfermedades cardiovascualares
+# Análisis integral: Criminalidad y enfermedades cardiovascualares
 
-##Crimen anual por comunidad y tipo
+## Crimen anual por comunidad y tipo
 <div class="code_explanation ">
 
 </div>
@@ -772,7 +772,7 @@ crimen_anual <- criminalidad_limpia %>%
   )
 ```
 
-##Limpieza enfermedades cardiovasculares y unión con criminalidad
+## Limpieza enfermedades cardiovasculares y unión con criminalidad
 
 ```{r limpieza_enf_car_criminalidad}
 Enf_card2 <- Enf_card %>%
@@ -822,7 +822,7 @@ crimen_cardio_limpio <- crimen_cardio %>%
 View(crimen_cardio_limpio)
 ```
 
-##¿Qué delitos se relacionan más con las enfermedades cardiovasculares?
+## ¿Qué delitos se relacionan más con las enfermedades cardiovasculares?
 
 ```{r del_enf_card}
 corr_por_delito <- crimen_cardio_limpio %>%
@@ -855,7 +855,7 @@ ggplot(corr_por_delito_plot,
   <p><strong>Respuesta:</strong> Los delitos con mayor relación (aunque negativa) con las enfermedades cardiovasculares son las sustracciones de vehículos, los robos con violencia e intimidación y los secuestros. Sin embargo, la relación no implica causalidad. Los resultados obtenidos muestran que todas las correlaciones son negativas y de magnitud débil, situándose entre –0.07 y –0.37. Esto indica que ningún tipo de delito presenta una relación clara o significativa con las enfermedades cardiovasculares, por lo que como conclusión sacamos que no hay relación entre la criminalidad y las enfermedades cardiovasculares.</p>
 </div>
 
-##¿Qué comunidades muestran mayor relación entre criminalidad y enfermedades cardiovasculares?
+## ¿Qué comunidades muestran mayor relación entre criminalidad y enfermedades cardiovasculares?
 
 ```{r rel_criminalidad_enf_card}
 ranking_comunidades <- crimen_cardio_limpio %>%
@@ -889,7 +889,7 @@ ggplot(
 </div>
 
 ## Tengamos en cuenta la población que vive por comunidad
-###¿Qué delitos se relacionan más con las enfermedades cardiovasculares teniendo en cuenta la poblacion?
+### ¿Qué delitos se relacionan más con las enfermedades cardiovasculares teniendo en cuenta la poblacion?
 
 ```{r rel_criminalidad_enf_card_poblacion }
 
@@ -931,7 +931,7 @@ ggplot(corr_por_delito_tasa, aes(x = reorder(Parámetro, correlacion), y = corre
     <li>La mayoría de los delitos presentan correlaciones bajas o negativas, indicando que <strong>no existe una              relación clara entre la criminalidad y la incidencia de enfermedades cardiovasculares</strong>.</li>
   </ul>
 </div>
-###¿Qué comunidades muestran mayor relación entre criminalidad y enfermedades cardiovasculares?
+### ¿Qué comunidades muestran mayor relación entre criminalidad y enfermedades cardiovasculares?
 ```{r}
 # 2) Ranking de comunidades según ratio de tasas
 ranking_comunidades_tasa <- crimen_cardio_tasas %>%
@@ -973,8 +973,8 @@ ggplot(ranking_comunidades_tasa, aes(x = reorder(comunidad, ratio), y = ratio)) 
   </p>
 </div>
 
-#Análisis integral: Criminalidad y fumadores diarios
-##Antes vamos a ver también la evolución de la criminalidad durante los años propuestos
+# Análisis integral: Criminalidad y fumadores diarios
+## Antes vamos a ver también la evolución de la criminalidad durante los años propuestos
 
 ```{r crim_evol,fig.width=12, fig.height=8}
 # Filtrar solo los parámetros que nos interesan
@@ -1022,7 +1022,7 @@ for (g in graficos_facetas) {
 }
 ```
 
-##Relacion entre criminalidad por comunidades y fumadores diarios
+## Relacion entre criminalidad por comunidades y fumadores diarios
 
 ```{r graf_crim_fum}
 #  Limpiar nombres de comunidad en criminalidad
@@ -1093,7 +1093,7 @@ tabla_fum_crimen %>%
   </ul>
 </div>
 
-##Ahora veremos la relacion de fumadores diarios pero por el parametro de crimnalidad
+## Ahora veremos la relacion de fumadores diarios pero por el parametro de crimnalidad
 
 ```{r graf_param_fum}
 #  Limpiar nombres de comunidad
@@ -1153,7 +1153,7 @@ for (g in graficos) {
 #Secuestro,Robos con violencia e intimidación, Hurtos,Tráfico de drogas,Sustracciones de vehículos,Homicidios dolosos y asesinatos consumados
 
 ```
-##Veamos los resultados en una tabla
+## Veamos los resultados en una tabla
 ```{r tab_param_fum}
 # Crear tabla resumen por comunidad y parámetro
 tabla_resumen <- datos_union_parametro %>%
